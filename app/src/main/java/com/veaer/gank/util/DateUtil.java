@@ -1,5 +1,12 @@
 package com.veaer.gank.util;
 
+import com.veaer.gank.model.VDate;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by Veaer on 15/8/18.
  */
@@ -8,21 +15,34 @@ public class DateUtil {
     public static VDate publish2date(String published) {
         return new VDate(published);
     }
-
-    public static class VDate {
-        public String Year;
-        public String Month;
-        public String Day;
-        public VDate(String published) {
-            String[] times = published.split("-");
-            this.Year = times[0];
-            this.Month = getMonth(times[1]);
-            this.Day = times[2].substring(0, 2);
-        }
-
-        public String getMonth(String monthNumber) {
-            String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-            return months[Integer.parseInt(monthNumber) - 1];
-        }
+    public static String getToday() {
+        return toDate(new Date());
     }
+
+    public static String toDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        return dateFormat.format(date);
+    }
+
+    public static String toDate(Date date, int add) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, add);
+        return toDate(calendar.getTime());
+    }
+
+    public static Date getLastdayDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, -1);
+        return calendar.getTime();
+    }
+
+    public static Date getNextdayDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 1);
+        return calendar.getTime();
+    }
+
 }

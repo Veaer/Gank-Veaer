@@ -16,4 +16,5 @@ public class URLProvider {
     public static final String ALLLURL = server + "data/all/";
 
     public static final String DAYURL = server + "day/";
+    public static final String VIDEOIMGURL = "http://gank.io/";
 }

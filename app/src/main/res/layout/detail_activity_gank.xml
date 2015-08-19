@@ -7,17 +7,10 @@
 
     <include layout="@layout/view_toolbar"/>
 
-    <com.veaer.gank.widget.HiSwipeRefreshLayout
+    <android.support.v7.widget.RecyclerView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:id="@+id/swipe_refresh_layout"
+        android:id="@+id/rv_detail_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_gank_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </com.veaer.gank.widget.HiSwipeRefreshLayout>
+        android:layout_height="match_parent" />
 
 </android.support.design.widget.CoordinatorLayout>

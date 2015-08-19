@@ -15,8 +15,9 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.Response;
 import com.veaer.gank.App;
 import com.veaer.gank.R;
-import com.veaer.gank.model.HiPicture;
-import com.veaer.gank.model.HiVideo;
+import com.veaer.gank.model.VPicture;
+import com.veaer.gank.model.VVideo;
+import com.veaer.gank.model.VDate;
 import com.veaer.gank.request.VolleyRequestManager;
 import com.veaer.gank.util.DateUtil;
 import com.veaer.gank.util.ToastUtils;
@@ -39,8 +40,8 @@ public class GankListActivity extends ToolbarActivity {
     HiSwipeRefreshLayout refreshLayout;
     boolean canAdd = true;
     GankListAdapter gankListAdapter = new GankListAdapter();
-    List<HiPicture> pictureList = new ArrayList<>();
-    List<HiVideo> videoList = new ArrayList<>();
+    List<VPicture> pictureList = new ArrayList<>();
+    List<VVideo> videoList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +87,11 @@ public class GankListActivity extends ToolbarActivity {
         VolleyRequestManager.getInstance().get(URLProvider.PICIURL + "10/" + page, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                List<HiPicture> resultPicture = JSON.parseArray(response.optString("results"), HiPicture.class);
+                List<VPicture> resultPicture = JSON.parseArray(response.optString("results"), VPicture.class);
                 VolleyRequestManager.getInstance().get(URLProvider.VIDEOURL + "10/" + page, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        List<HiVideo> resultVideo = JSON.parseArray(response.optString("results"), HiVideo.class);
+                        List<VVideo> resultVideo = JSON.parseArray(response.optString("results"), VVideo.class);
 
                         if(resultPicture.size() == 0) {
                             canAdd = false;
@@ -134,19 +135,6 @@ public class GankListActivity extends ToolbarActivity {
                     nextPage += 1;
                     initView(nextPage, false);
                 }
-//                boolean isBottom = rv.getChildAt(pictureList.size() - 1).getVisibility() == View.VISIBLE;
-//                linearLayoutManager.findLastCompletelyVisibleItemPositions(new int[2])[1]
-//                                >= mMeizhiListAdapter.getItemCount() - 4;
-//                if (!mSwipeRefreshLayout.isRefreshing() && isBottom) {
-//                    if (!mIsFirstTimeTouchBottom) {
-//                        mSwipeRefreshLayout.setRefreshing(true);
-//                        mPage += 1;
-//                        getData();
-//                    }
-//                    else {
-//                        mIsFirstTimeTouchBottom = false;
-//                    }
-//                }
             }
         };
     }
@@ -208,8 +196,8 @@ public class GankListActivity extends ToolbarActivity {
             pictureIV = (HiImageView)view.findViewById(R.id.picture);
         }
 
-        public void bindViews(HiPicture mPicture, HiVideo mVideo) {
-            DateUtil.VDate vDate = DateUtil.publish2date(mPicture.publishedAt);
+        public void bindViews(VPicture mPicture, VVideo mVideo) {
+            VDate vDate = DateUtil.publish2date(mPicture.publishedAt);
             yearTv.setText(vDate.Year);
             monthTv.setText(vDate.Month);
             dayTv.setText(vDate.Day);
