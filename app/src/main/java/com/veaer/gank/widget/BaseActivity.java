@@ -1,6 +1,5 @@
 package com.veaer.gank.widget;
 
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -21,7 +20,7 @@ public class BaseActivity extends AppCompatActivity {
         findViewById(id).setVisibility(View.VISIBLE);
     }
 
-    public Typeface getFont() {
-        return Typeface.createFromAsset(getAssets(), "fonts/SiYuan.otf");
-    }
+//    public Typeface getFont() {
+//        return Typeface.createFromAsset(getAssets(), "fonts/SiYuan.otf");
+//    }
 }

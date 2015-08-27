@@ -84,7 +84,7 @@ public class GankListActivity extends ToolbarActivity {
             setRefreshing(false);
             return;
         }
-        VolleyRequestManager.getInstance().get(URLProvider.PICIURL + "10/" + page, null, new Response.Listener<JSONObject>() {
+        VolleyRequestManager.getInstance().get(!refresh, URLProvider.PICIURL + "10/" + page, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 List<VPicture> resultPicture = JSON.parseArray(response.optString("results"), VPicture.class);
@@ -169,6 +169,8 @@ public class GankListActivity extends ToolbarActivity {
     }
 
     public class GankItemViewHolder extends RecyclerView.ViewHolder {
+        VDate vDate;
+
         TextView descTv;
         TextView yearTv;
         TextView monthTv;
@@ -183,13 +185,14 @@ public class GankListActivity extends ToolbarActivity {
 
         public void toActivity() {
             Intent intent = new Intent(getApplicationContext(), GankDetailActivity.class);
+            intent.putExtra("current_time", vDate.TIME);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
         }
 
         public void getViewHolderViews(View view) {
             descTv = (TextView)view.findViewById(R.id.desc);
-            descTv.setTypeface(getFont());
+//            descTv.setTypeface(getFont());
             yearTv = (TextView)view.findViewById(R.id.year);
             monthTv = (TextView)view.findViewById(R.id.month);
             dayTv = (TextView)view.findViewById(R.id.day);
@@ -197,10 +200,10 @@ public class GankListActivity extends ToolbarActivity {
         }
 
         public void bindViews(VPicture mPicture, VVideo mVideo) {
-            VDate vDate = DateUtil.publish2date(mPicture.publishedAt);
-            yearTv.setText(vDate.Year);
-            monthTv.setText(vDate.Month);
-            dayTv.setText(vDate.Day);
+            vDate = DateUtil.publish2date(mPicture.publishedAt);
+            yearTv.setText(vDate.YEAR);
+            monthTv.setText(vDate.MONTH);
+            dayTv.setText(vDate.DAY);
             descTv.setText(mVideo.desc);
             pictureIV.loadImage(mPicture.url);
         }

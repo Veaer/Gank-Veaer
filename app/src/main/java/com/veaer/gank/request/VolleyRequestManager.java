@@ -32,6 +32,10 @@ public class VolleyRequestManager {
     }
 
     public void get(final String url, final LoadingErrorFragment loadingErrorFragment, Response.Listener<JSONObject> listener) {
+        this.get(false, url, loadingErrorFragment, listener);
+    }
+
+    public void get(boolean useCache, final String url, final LoadingErrorFragment loadingErrorFragment, Response.Listener<JSONObject> listener) {
         JsonObjectRequest request = new JsonObjectRequest(url,
                 listener, new Response.ErrorListener() {
             @Override
@@ -42,11 +46,11 @@ public class VolleyRequestManager {
             @Override
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
+                    //缓存半天
+                    response.headers.put("Cache-Control", "max-age=43200");
                     String jsonString = new String(response.data,
                             HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
                     Cache.Entry requestEntry = HttpHeaderParser.parseCacheHeaders(response);
-                    requestEntry.ttl = System.currentTimeMillis() + 86400 * 60 * 60 * 12;
-                    requestEntry.softTtl = System.currentTimeMillis() + 86400 * 60 * 60 * 12;
                     return Response.success(new JSONObject(jsonString), requestEntry);
                 } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
@@ -55,7 +59,7 @@ public class VolleyRequestManager {
                 }
             }
         };
-        request.setShouldCache(true);
+        request.setShouldCache(useCache);
         request.setRetryPolicy(new DefaultRetryPolicy(TIME_OUT, 1, 1.0f));
         VolleyUtil.getRequestQueue().add(request);
     }
@@ -70,6 +74,8 @@ public class VolleyRequestManager {
             @Override
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
+                    //缓存半天
+                    response.headers.put("Cache-Control", "max-age=43200");
                     String jsonString = new String(response.data,
                             HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
 
@@ -86,7 +92,7 @@ public class VolleyRequestManager {
             }
         };
 
-        request.setShouldCache(true);
+        request.setShouldCache(false);
         request.setRetryPolicy(new DefaultRetryPolicy(TIME_OUT, 1, 1.0f));
         VolleyUtil.getRequestQueue().add(request);
     }

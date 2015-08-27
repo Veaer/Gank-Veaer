@@ -33,6 +33,7 @@ import java.util.List;
  * Created by Veaer on 15/8/19.
  */
 public class GankDetailActivity extends ToolbarActivity {
+    String time;
     RecyclerView detailListRv;
     GankDetailAdapter gankDetailAdapter = new GankDetailAdapter();
     List<String> category = new ArrayList<>();
@@ -44,6 +45,7 @@ public class GankDetailActivity extends ToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity_gank);
+        time = getIntent().getStringExtra("current_time");
         initToolBar();
         getViews();
         initView();
@@ -76,7 +78,7 @@ public class GankDetailActivity extends ToolbarActivity {
 
 
     public void initView() {
-        VolleyRequestManager.getInstance().getNoJson(URLProvider.VIDEOIMGURL + DateUtil.getToday(), new Response.Listener<JSONObject>() {
+        VolleyRequestManager.getInstance().getNoJson(URLProvider.VIDEOIMGURL + time, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 vToday = new VToday(response.optString("data"));
@@ -128,39 +130,31 @@ public class GankDetailActivity extends ToolbarActivity {
 
         @Override
         public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            BaseViewHolder viewHolder;
             switch (viewType) {
                 case TODAY:
-                    viewHolder = new TitleViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_title, parent, false));
-                    break;
+                    return new TitleViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_title, parent, false));
+                case PICTURE:
+                    return new PictureViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_picture, parent, false));
                 default:
-                    viewHolder = new TitleViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_title, parent, false));
+                    return new TitleViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_title, parent, false));
             }
-            return viewHolder;
         }
 
         @Override
         public int getItemViewType(int position) {
             String className = dataList.get(position).getClass().getName();
-            int type = 0;
             switch (className) {
                 case "VToday":
-                    type = TODAY;
-                    break;
+                    return TODAY;
                 case "VPicture":
-                    type = PICTURE;
-                    break;
+                    return PICTURE;
                 case "VFeed":
-                    type = FEED;
-                    break;
+                    return FEED;
                 case "VVideo":
-                    type = VIDEO;
-                    break;
+                    return VIDEO;
                 default:
-                    type = TODAY;
-                    break;
+                    return TODAY;
             }
-            return type;
         }
     }
 
@@ -170,11 +164,36 @@ public class GankDetailActivity extends ToolbarActivity {
         public TitleViewHolder(View view) {
             super(view);
             getViewHolderViews(view);
+            view.setOnClickListener(v->openVideo());
+        }
+
+        public void openVideo() {
         }
 
         public void getViewHolderViews(View view) {
             titleTv = (TextView)view.findViewById(R.id.detail_title);
-            titleTv.setTypeface(getFont());
+//            titleTv.setTypeface(getFont());
+        }
+
+        @Override
+        public void bindViews(Object object, Object... args) {
+            if(object instanceof VToday) {
+                titleTv.setText(vToday.pageTitle);
+            }
+        }
+    }
+
+    public class PictureViewHolder extends BaseViewHolder {
+        TextView titleTv;
+
+        public PictureViewHolder(View view) {
+            super(view);
+            getViewHolderViews(view);
+        }
+
+        public void getViewHolderViews(View view) {
+            titleTv = (TextView)view.findViewById(R.id.detail_title);
+//            titleTv.setTypeface(getFont());
         }
 
         @Override
