@@ -89,7 +89,7 @@
     <com.veaer.gank.widget.HiImageView
         android:id="@+id/picture"
         android:scaleType="centerInside"
-        app:placeholderImage="@mipmap/ic_launcher"
+        app:placeholderImage="@mipmap/gank_launcher"
         android:layout_width="match_parent"
         android:layout_height="250dp" />
 </LinearLayout>

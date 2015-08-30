@@ -15,13 +15,14 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.Response;
 import com.veaer.gank.App;
 import com.veaer.gank.R;
+import com.veaer.gank.model.VDate;
 import com.veaer.gank.model.VPicture;
 import com.veaer.gank.model.VVideo;
-import com.veaer.gank.model.VDate;
 import com.veaer.gank.request.VolleyRequestManager;
 import com.veaer.gank.util.DateUtil;
 import com.veaer.gank.util.ToastUtils;
 import com.veaer.gank.util.URLProvider;
+import com.veaer.gank.widget.BaseViewHolder;
 import com.veaer.gank.widget.HiImageView;
 import com.veaer.gank.widget.HiSwipeRefreshLayout;
 import com.veaer.gank.widget.ToolbarActivity;
@@ -78,13 +79,13 @@ public class GankListActivity extends ToolbarActivity {
         setSupportActionBar(mToolbar);
     }
 
-    public void initView(int page, boolean refresh) {
+    public void initView(int page, boolean is_refresh) {
         if(!canAdd) {
             ToastUtils.showShort("滑不动了哟");
             setRefreshing(false);
             return;
         }
-        VolleyRequestManager.getInstance().get(!refresh, URLProvider.PICIURL + "10/" + page, null, new Response.Listener<JSONObject>() {
+        VolleyRequestManager.getInstance().get(!is_refresh, URLProvider.PICIURL + "10/" + page, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 List<VPicture> resultPicture = JSON.parseArray(response.optString("results"), VPicture.class);
@@ -93,11 +94,14 @@ public class GankListActivity extends ToolbarActivity {
                     public void onResponse(JSONObject response) {
                         List<VVideo> resultVideo = JSON.parseArray(response.optString("results"), VVideo.class);
 
-                        if(resultPicture.size() == 0) {
+                        if(resultPicture.size() < 10) {
+                            canAdd = false;
+                        }
+                        if(resultPicture.size() == 0 ) {
                             canAdd = false;
                             ToastUtils.showShort("滑不动了哟");
                         }
-                        if (refresh) {
+                        if (is_refresh) {
                             pictureList = resultPicture;
                             videoList = resultVideo;
                         } else {
@@ -168,7 +172,7 @@ public class GankListActivity extends ToolbarActivity {
         }
     }
 
-    public class GankItemViewHolder extends RecyclerView.ViewHolder {
+    public class GankItemViewHolder extends BaseViewHolder {
         VDate vDate;
 
         TextView descTv;
@@ -176,30 +180,32 @@ public class GankListActivity extends ToolbarActivity {
         TextView monthTv;
         TextView dayTv;
         HiImageView pictureIV;
+        VPicture mPic;
 
         public GankItemViewHolder(View view) {
             super(view);
-            getViewHolderViews(view);
             view.setOnClickListener(v -> toActivity());
         }
 
         public void toActivity() {
             Intent intent = new Intent(getApplicationContext(), GankDetailActivity.class);
             intent.putExtra("current_time", vDate.TIME);
+            intent.putExtra("title_bg", mPic.url);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
         }
 
-        public void getViewHolderViews(View view) {
-            descTv = (TextView)view.findViewById(R.id.desc);
+        public void getViewHolderViews() {
+            descTv = $(R.id.desc);
 //            descTv.setTypeface(getFont());
-            yearTv = (TextView)view.findViewById(R.id.year);
-            monthTv = (TextView)view.findViewById(R.id.month);
-            dayTv = (TextView)view.findViewById(R.id.day);
-            pictureIV = (HiImageView)view.findViewById(R.id.picture);
+            yearTv = $(R.id.year);
+            monthTv = $(R.id.month);
+            dayTv = $(R.id.day);
+            pictureIV = $(R.id.picture);
         }
 
         public void bindViews(VPicture mPicture, VVideo mVideo) {
+            mPic = mPicture;
             vDate = DateUtil.publish2date(mPicture.publishedAt);
             yearTv.setText(vDate.YEAR);
             monthTv.setText(vDate.MONTH);

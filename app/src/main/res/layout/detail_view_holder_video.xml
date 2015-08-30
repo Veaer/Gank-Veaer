@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/detail_margin_left_right"
+    android:layout_marginRight="@dimen/detail_margin_left_right"
+    android:paddingTop="5dp"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feed_star"
+            android:textColor="@color/md_cyan_A100"
+            android:textSize="15sp"/>
+
+        <android.support.v4.widget.Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp"
+            android:id="@+id/detail_label"/>
+
+    </LinearLayout>
+
+    <com.veaer.gank.widget.HiImageView
+        android:id="@+id/detail_video_cover"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="300dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop"/>
+</LinearLayout>

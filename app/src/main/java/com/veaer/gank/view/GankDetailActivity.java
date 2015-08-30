@@ -1,10 +1,12 @@
 package com.veaer.gank.view;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,13 @@ import com.android.volley.Response;
 import com.veaer.gank.App;
 import com.veaer.gank.R;
 import com.veaer.gank.model.VFeed;
-import com.veaer.gank.model.VPicture;
 import com.veaer.gank.model.VToday;
 import com.veaer.gank.model.VVideo;
 import com.veaer.gank.request.VolleyRequestManager;
-import com.veaer.gank.util.DateUtil;
+import com.veaer.gank.util.StringStyleUtil;
 import com.veaer.gank.util.URLProvider;
 import com.veaer.gank.widget.BaseViewHolder;
+import com.veaer.gank.widget.HiImageView;
 import com.veaer.gank.widget.ToolbarActivity;
 
 import org.json.JSONObject;
@@ -34,6 +36,7 @@ import java.util.List;
  */
 public class GankDetailActivity extends ToolbarActivity {
     String time;
+    String titleBgUrl;
     RecyclerView detailListRv;
     GankDetailAdapter gankDetailAdapter = new GankDetailAdapter();
     List<String> category = new ArrayList<>();
@@ -46,6 +49,7 @@ public class GankDetailActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity_gank);
         time = getIntent().getStringExtra("current_time");
+        titleBgUrl = getIntent().getStringExtra("title_bg");
         initToolBar();
         getViews();
         initView();
@@ -83,22 +87,25 @@ public class GankDetailActivity extends ToolbarActivity {
             public void onResponse(JSONObject response) {
                 vToday = new VToday(response.optString("data"));
                 dataList.add(vToday);
-                VolleyRequestManager.getInstance().get(URLProvider.DAYURL + DateUtil.getToday(), null, new Response.Listener<JSONObject>() {
+                VolleyRequestManager.getInstance().get(URLProvider.DAYURL + time, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         if(!response.optBoolean("error")) {
                             category = JSON.parseArray(response.optString("category"), String.class);
                             JSONObject results = response.optJSONObject("results");
+                            List<Object> videoList = new ArrayList<>();
+                            List<Object> feedList = new ArrayList<>();
                             for(String cate : category) {
-                                dataList.add(cate);
                                 if(cate.contains("视频")) {
-                                    dataList.add(JSON.parseArray(results.optString(cate), VVideo.class));
-                                } else if(cate.contains("福利")) {
-                                    dataList.add(JSON.parseArray(results.optString(cate), VPicture.class));
-                                } else {
-                                    dataList.add(JSON.parseArray(results.optString(cate), VFeed.class));
+                                    videoList.add(cate);
+                                    videoList.addAll(JSON.parseArray(results.optString(cate), VVideo.class));
+                                } else if(!cate.contains("福利")) {
+                                    feedList.add(cate);
+                                    feedList.addAll(JSON.parseArray(results.optString(cate), VFeed.class));
                                 }
                             }
+                            dataList.addAll(feedList);
+                            dataList.addAll(videoList);
                             gankDetailAdapter.notifyDataSetChanged();
                         }
                     }
@@ -108,8 +115,8 @@ public class GankDetailActivity extends ToolbarActivity {
     }
 
     public class GankDetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-        final public int TODAY = 1;
-        final int PICTURE = 2;
+        final int TODAY = 1;
+        final int LABEL = 2;
         final int FEED = 3;
         final int VIDEO = 4;
         private LayoutInflater mLayoutInflater;
@@ -133,8 +140,12 @@ public class GankDetailActivity extends ToolbarActivity {
             switch (viewType) {
                 case TODAY:
                     return new TitleViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_title, parent, false));
-                case PICTURE:
-                    return new PictureViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_picture, parent, false));
+                case LABEL:
+                    return new LabelViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_label, parent, false));
+                case FEED:
+                    return new FeedViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_feed, parent, false));
+                case VIDEO:
+                    return new VideoViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_video, parent, false));
                 default:
                     return new TitleViewHolder(mLayoutInflater.inflate(R.layout.detail_view_holder_title, parent, false));
             }
@@ -142,12 +153,13 @@ public class GankDetailActivity extends ToolbarActivity {
 
         @Override
         public int getItemViewType(int position) {
-            String className = dataList.get(position).getClass().getName();
+            String longName = dataList.get(position).getClass().getName();
+            String className = longName.substring(longName.lastIndexOf(".") + 1, longName.length());
             switch (className) {
                 case "VToday":
                     return TODAY;
-                case "VPicture":
-                    return PICTURE;
+                case "String":
+                    return LABEL;
                 case "VFeed":
                     return FEED;
                 case "VVideo":
@@ -160,49 +172,122 @@ public class GankDetailActivity extends ToolbarActivity {
 
     public class TitleViewHolder extends BaseViewHolder {
         TextView titleTv;
+        HiImageView titleBg;
 
         public TitleViewHolder(View view) {
             super(view);
-            getViewHolderViews(view);
-            view.setOnClickListener(v->openVideo());
+        }
+
+        @Override
+        public void getViewHolderViews() {
+            titleTv = $(R.id.detail_title);
+//            titleTv.setTypeface(getFont());
+            titleBg = $(R.id.title_bg);
+            titleBg.setAspectRatio(0.7f);
+        }
+
+        @Override
+        public void bindViews(Object object, Object... args) {
+            titleTv.setText(vToday.pageTitle);
+            titleBg.loadImage(titleBgUrl);
+        }
+    }
+
+    public class LabelViewHolder extends BaseViewHolder {
+        TextView labelTv;
+
+        public LabelViewHolder(View view) {
+            super(view);
+        }
+
+        @Override
+        public void getViewHolderViews() {
+            labelTv = $(R.id.detail_label);
+        }
+
+        @Override
+        public void bindViews(Object object, Object... args) {
+            labelTv.setText(object.toString());
+        }
+    }
+
+    public class FeedViewHolder extends BaseViewHolder {
+        TextView labelTv;
+        VFeed vFeed;
+
+        public FeedViewHolder(View view) {
+            super(view);
+            view.setOnClickListener(v -> openWeb());
+        }
+
+        public void openWeb() {
+            Intent videoIntent = new Intent(GankDetailActivity.this, GankVideoActivity.class);
+            videoIntent.putExtra("video_url", vFeed.url);
+            videoIntent.putExtra("video_title", vFeed.desc);
+            startActivity(videoIntent);
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+        }
+
+        @Override
+        public void getViewHolderViews() {
+            labelTv = $(R.id.detail_label);
+        }
+
+        @Override
+        public void bindViews(Object object, Object... args) {
+            vFeed = (VFeed)object;
+            SpannableStringBuilder builder = new SpannableStringBuilder(vFeed.desc).append(
+                    StringStyleUtil.format(getApplicationContext(), " (via. " + vFeed.who + ")",
+                            R.style.ViaTextAppearance));
+            labelTv.setText(builder);
+
+        }
+    }
+
+    public class VideoViewHolder extends BaseViewHolder {
+        HiImageView videoCover;
+        TextView labelTv;
+        String url;
+        String title;
+
+        public VideoViewHolder(View view) {
+            super(view);
+            view.setOnClickListener(v -> openVideo());
         }
 
         public void openVideo() {
+            Intent videoIntent = new Intent(GankDetailActivity.this, GankVideoActivity.class);
+            videoIntent.putExtra("video_url", url);
+            videoIntent.putExtra("video_title", title);
+            startActivity(videoIntent);
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
         }
 
-        public void getViewHolderViews(View view) {
-            titleTv = (TextView)view.findViewById(R.id.detail_title);
-//            titleTv.setTypeface(getFont());
+        @Override
+        public void getViewHolderViews() {
+            videoCover = $(R.id.detail_video_cover);
+            labelTv = $(R.id.detail_label);
         }
 
         @Override
         public void bindViews(Object object, Object... args) {
-            if(object instanceof VToday) {
-                titleTv.setText(vToday.pageTitle);
+            VVideo vVideo = (VVideo)object;
+            SpannableStringBuilder builder = new SpannableStringBuilder(vVideo.desc).append(
+                    StringStyleUtil.format(getApplicationContext(), " (via. " + vVideo.who + ")",
+                            R.style.ViaTextAppearance));
+            labelTv.setText(builder);
+            if(vToday.hasPreview) {
+                url = vVideo.url;
+                videoCover.loadImage(vToday.imagePreview);
+            } else {
+                url = vVideo.url;
+//                url = vToday.imagePreview;
+                videoCover.setVisibility(View.GONE);
             }
+            title = vVideo.desc;
         }
     }
 
-    public class PictureViewHolder extends BaseViewHolder {
-        TextView titleTv;
-
-        public PictureViewHolder(View view) {
-            super(view);
-            getViewHolderViews(view);
-        }
-
-        public void getViewHolderViews(View view) {
-            titleTv = (TextView)view.findViewById(R.id.detail_title);
-//            titleTv.setTypeface(getFont());
-        }
-
-        @Override
-        public void bindViews(Object object, Object... args) {
-            if(object instanceof VToday) {
-                titleTv.setText(vToday.pageTitle);
-            }
-        }
-    }
 
 
 }

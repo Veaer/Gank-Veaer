@@ -59,7 +59,8 @@ public class VolleyRequestManager {
                 }
             }
         };
-        request.setShouldCache(useCache);
+//        request.setShouldCache(useCache);
+        request.setShouldCache(false);
         request.setRetryPolicy(new DefaultRetryPolicy(TIME_OUT, 1, 1.0f));
         VolleyUtil.getRequestQueue().add(request);
     }

@@ -40,4 +40,5 @@ dependencies {
     compile 'com.facebook.fresco:imagepipeline-okhttp:0.5.0+'
     compile 'com.alibaba:fastjson:1.1.34.android'
     compile 'com.mcxiaoke.volley:library:1.0.17'
+    compile 'com.daimajia.numberprogressbar:library:1.2@aar'
 }

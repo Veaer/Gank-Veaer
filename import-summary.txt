@@ -7,81 +7,23 @@ The following files were *not* copied into the new Gradle project; you
 should evaluate whether these are still needed in your project and if
 so manually move them:
 
+* .gitignore
+* README.md
+* build.xml
 * ic_launcher-web.png
 * proguard-project.txt
-
-Replaced Jars with Dependencies:
---------------------------------
-The importer recognized the following .jar files as third party
-libraries and replaced them with Gradle dependencies instead. This has
-the advantage that more explicit version information is known, and the
-libraries can be updated automatically. However, it is possible that
-the .jar file in your project was of an older version than the
-dependency we picked, which could render the project not compileable.
-You can disable the jar replacement in the import wizard and try again:
-
-android-support-v4.jar => com.android.support:support-v4:22.+
-gson-2.2.4.jar => com.google.code.gson:gson:2.2.4
-
-Potentially Missing Dependency:
--------------------------------
-When we replaced the following .jar files with a Gradle dependency, we
-inferred the dependency version number from the filename. This
-specific version may not actually be available from the repository.
-If you get a build error stating that the dependency is missing, edit
-the version number to for example "+" to pick up the latest version
-instead. (This may require you to update your code if the library APIs
-have changed.)
-
-gson-2.2.4.jar => version 2.2.4 in com.google.code.gson:gson:2.2.4
 
 Moved Files:
 ------------
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-* AndroidManifest.xml => videoJJSdk/src/main/AndroidManifest.xml
-* assets/ => videoJJSdk/src/main/assets
-* libs/arm64-v8a/libVideoSdkMd5.so => videoJJSdk/src/main/jniLibs/arm64-v8a/libVideoSdkMd5.so
-* libs/arm64-v8a/libijkffmpeg.so => videoJJSdk/src/main/jniLibs/arm64-v8a/libijkffmpeg.so
-* libs/arm64-v8a/libijkplayer.so => videoJJSdk/src/main/jniLibs/arm64-v8a/libijkplayer.so
-* libs/arm64-v8a/libijksdl.so => videoJJSdk/src/main/jniLibs/arm64-v8a/libijksdl.so
-* libs/arm64-v8a/libijkutil.so => videoJJSdk/src/main/jniLibs/arm64-v8a/libijkutil.so
-* libs/armeabi-v7a/libVideoSdkMd5.so => videoJJSdk/src/main/jniLibs/armeabi-v7a/libVideoSdkMd5.so
-* libs/armeabi-v7a/libijkadk.so => videoJJSdk/src/main/jniLibs/armeabi-v7a/libijkadk.so
-* libs/armeabi-v7a/libijkffmpeg.so => videoJJSdk/src/main/jniLibs/armeabi-v7a/libijkffmpeg.so
-* libs/armeabi-v7a/libijkplayer.so => videoJJSdk/src/main/jniLibs/armeabi-v7a/libijkplayer.so
-* libs/armeabi-v7a/libijksdl.so => videoJJSdk/src/main/jniLibs/armeabi-v7a/libijksdl.so
-* libs/armeabi-v7a/libijkutil.so => videoJJSdk/src/main/jniLibs/armeabi-v7a/libijkutil.so
-* libs/armeabi-v7a/libstlport_shared.so => videoJJSdk/src/main/jniLibs/armeabi-v7a/libstlport_shared.so
-* libs/armeabi/libVideoSdkMd5.so => videoJJSdk/src/main/jniLibs/armeabi/libVideoSdkMd5.so
-* libs/armeabi/libijkffmpeg.so => videoJJSdk/src/main/jniLibs/armeabi/libijkffmpeg.so
-* libs/armeabi/libijkplayer.so => videoJJSdk/src/main/jniLibs/armeabi/libijkplayer.so
-* libs/armeabi/libijksdl.so => videoJJSdk/src/main/jniLibs/armeabi/libijksdl.so
-* libs/armeabi/libijkutil.so => videoJJSdk/src/main/jniLibs/armeabi/libijkutil.so
-* libs/armeabi/libstlport_shared.so => videoJJSdk/src/main/jniLibs/armeabi/libstlport_shared.so
-* libs/videojj_sdk.jar => videoJJSdk/libs/videojj_sdk.jar
-* libs/x86/libVideoSdkMd5.so => videoJJSdk/src/main/jniLibs/x86/libVideoSdkMd5.so
-* libs/x86/libijkffmpeg.so => videoJJSdk/src/main/jniLibs/x86/libijkffmpeg.so
-* libs/x86/libijkplayer.so => videoJJSdk/src/main/jniLibs/x86/libijkplayer.so
-* libs/x86/libijksdl.so => videoJJSdk/src/main/jniLibs/x86/libijksdl.so
-* libs/x86/libijkutil.so => videoJJSdk/src/main/jniLibs/x86/libijkutil.so
-* res/ => videoJJSdk/src/main/res/
-* src/ => videoJJSdk/src/main/java/
-
-Missing Android Support Repository:
------------------------------------
-Some useful libraries, such as the Android Support Library, are
-installed from a special Maven repository, which should be installed
-via the SDK manager.
-
-It looks like this library is missing from your SDK installation at:
-null
-
-To install it, open the SDK manager, and in the Extras category,
-select "Android Support Repository". You may also want to install the
-"Google Repository" if you want to use libraries like Google Play
-Services.
+* AndroidManifest.xml => vitamioBundle30/src/main/AndroidManifest.xml
+* libs/armeabi-v7a/libvinit.so => vitamioBundle30/src/main/jniLibs/armeabi-v7a/libvinit.so
+* libs/armeabi/libvinit.so => vitamioBundle30/src/main/jniLibs/armeabi/libvinit.so
+* libs/vitamio.jar => vitamioBundle30/libs/vitamio.jar
+* res/ => vitamioBundle30/src/main/res/
+* src/ => vitamioBundle30/src/main/java/
 
 Next Steps:
 -----------
