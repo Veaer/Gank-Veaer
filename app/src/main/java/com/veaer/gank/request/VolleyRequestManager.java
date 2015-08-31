@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.veaer.gank.util.ToastUtils;
 import com.veaer.gank.widget.LoadingErrorFragment;
 
 import org.json.JSONException;
@@ -40,7 +41,8 @@ public class VolleyRequestManager {
                 listener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                loadingErrorFragment.showMe();
+//                loadingErrorFragment.showMe();
+                ToastUtils.showShort("你好像没联网诶");
             }
         }) {
             @Override
@@ -59,8 +61,8 @@ public class VolleyRequestManager {
                 }
             }
         };
-//        request.setShouldCache(useCache);
-        request.setShouldCache(false);
+        request.setShouldCache(useCache);
+//        request.setShouldCache(false);
         request.setRetryPolicy(new DefaultRetryPolicy(TIME_OUT, 1, 1.0f));
         VolleyUtil.getRequestQueue().add(request);
     }
