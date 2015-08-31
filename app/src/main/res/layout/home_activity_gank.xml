@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/list_text_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+
+        <com.veaer.gank.widget.HiImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:id="@+id/home_pic"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_alignParentBottom="true"
+            android:gravity="right"
+            android:paddingRight="15dp"
+            android:background="#99000000"
+            android:textColor="@color/md_white_1000"
+            android:id="@+id/home_pic_via"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/home_video_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        android:background="@color/md_grey_800">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="@color/md_white_1000"
+            android:id="@+id/home_video"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:gravity="right"
+            android:text="@string/to_video"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/md_white_1000"
+            android:id="@+id/home_video_go"/>
+
+        <TextView
+            android:layout_above="@id/home_video_go"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/md_white_1000"
+            android:id="@+id/home_video_via"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/home_to_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:text="@string/to_history"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:background="@color/md_grey_800"
+        android:textColor="@color/md_white_1000"/>
+</LinearLayout>

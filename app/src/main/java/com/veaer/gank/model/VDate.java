@@ -1,9 +1,11 @@
 package com.veaer.gank.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Veaer on 15/8/19.
  */
-public class VDate {
+public class VDate implements Serializable {
     public String TIME;
     public String YEAR;
     public String MONTH;

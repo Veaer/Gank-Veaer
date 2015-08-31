@@ -12,11 +12,50 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    dexOptions {
+        incremental false
+        javaMaxHeapSize "4g"
+    }
+
+    signingConfigs {
+        debug {
+
         }
+
+        release {
+        }
+    }
+
+    buildTypes {
+        debug {
+            manifestPlaceholders = [
+                    UMENG_APPKEY: "55e44716e0f55aa3a8004c5d",
+                    UMENG_MESSAGE_SECRET: "67100d31ce327abf16a8fb3258d5073f"
+            ]
+
+        }
+
+        release {
+            manifestPlaceholders = [
+                    UMENG_APPKEY: "55e44716e0f55aa3a8004c5d",
+                    UMENG_MESSAGE_SECRET: "67100d31ce327abf16a8fb3258d5073f"
+            ]
+
+            minifyEnabled false
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    productFlavors {
+        "veaer"{}
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
 
     compileOptions {
@@ -41,4 +80,5 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.34.android'
     compile 'com.mcxiaoke.volley:library:1.0.17'
     compile 'com.daimajia.numberprogressbar:library:1.2@aar'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

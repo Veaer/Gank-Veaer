@@ -4,4 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="feed_star">★</string>
+    <string name="to_video">-->去看视频~</string>
+    <string name="to_history">查看往期</string>
 </resources>

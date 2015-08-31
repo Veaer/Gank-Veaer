@@ -37,14 +37,28 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="${UMENG_APPKEY}"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}"/>
         <activity
-            android:name=".view.GankListActivity"
+            android:name=".view.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.HomeActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".view.GankListActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".view.GankDetailActivity"

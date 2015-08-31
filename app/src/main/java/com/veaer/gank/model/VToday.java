@@ -1,9 +1,11 @@
 package com.veaer.gank.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Veaer on 15/8/19.
  */
-public class VToday {
+public class VToday implements Serializable {
     public String imagePreview;
     public String pageTitle;
     public boolean hasPreview = false;
