@@ -1,6 +1,7 @@
 package com.veaer.gank.view;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,13 +12,13 @@ import android.webkit.WebViewClient;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.veaer.gank.R;
-import com.veaer.gank.widget.BaseActivity;
+import com.veaer.gank.widget.ToolbarActivity;
 
 
 /**
  * Created by Veaer on 15/8/27.
  */
-public class GankVideoActivity extends BaseActivity {
+public class GankWebActivity extends ToolbarActivity {
 
     NumberProgressBar mProgressbar;
     WebView mWebView;
@@ -28,11 +29,12 @@ public class GankVideoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.video_activity_gank);
+        setContentView(R.layout.web_activity_gank);
+        mUrl = getIntent().getStringExtra("feed_url");
+        mTitle = getIntent().getStringExtra("feed_title");
+        initToolBar();
         getViews();
         mContext = this;
-        mUrl = getIntent().getStringExtra("video_url");
-        mTitle = getIntent().getStringExtra("video_title");
 
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -47,6 +49,24 @@ public class GankVideoActivity extends BaseActivity {
         mWebView.loadUrl(mUrl);
 
         if (mTitle != null) setTitle(mTitle);
+    }
+
+    public void initToolBar() {
+        mToolbar = $(R.id.toolbar);
+        mAppBar = $(R.id.app_bar_layout);
+
+        if(Build.VERSION.SDK_INT >= 21) {
+            mAppBar.setElevation(10.6f);
+        }
+        mToolbar.setTitle(mTitle);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.theme_text_color));
+        setSupportActionBar(mToolbar);
+        mToolbar.setOnClickListener(v -> goTop());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public void goTop() {
+        mWebView.scrollTo(0,0);
     }
 
     public void getViews() {
@@ -103,4 +123,5 @@ public class GankVideoActivity extends BaseActivity {
             return true;
         }
     }
+
 }

@@ -221,9 +221,9 @@ public class GankDetailActivity extends ToolbarActivity {
         }
 
         public void openWeb() {
-            Intent videoIntent = new Intent(GankDetailActivity.this, GankVideoActivity.class);
-            videoIntent.putExtra("video_url", vFeed.url);
-            videoIntent.putExtra("video_title", vFeed.desc);
+            Intent videoIntent = new Intent(GankDetailActivity.this, GankWebActivity.class);
+            videoIntent.putExtra("feed_url", vFeed.url);
+            videoIntent.putExtra("feed_title", vFeed.desc);
             startActivity(videoIntent);
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
         }
