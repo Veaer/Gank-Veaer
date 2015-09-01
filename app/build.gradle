@@ -24,6 +24,8 @@ android {
         }
 
         release {
+            keyAlias "veaer_release"
+            keyPassword "123456"
         }
     }
 
