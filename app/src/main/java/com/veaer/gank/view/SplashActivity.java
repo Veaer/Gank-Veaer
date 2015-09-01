@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Response;
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.analytics.MobclickAgent;
 import com.veaer.gank.R;
 import com.veaer.gank.model.VDate;
 import com.veaer.gank.model.VFeed;
@@ -33,6 +35,8 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity_gank);
+        MobclickAgent.updateOnlineConfig(this);
+        AnalyticsConfig.enableEncrypt(true);
         loadData();
         new Handler().postDelayed(new Runnable() {
 
