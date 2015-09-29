@@ -4,32 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.alibaba.fastjson.JSON;
-import com.android.volley.Response;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.veaer.gank.R;
+import com.veaer.gank.data.VAll;
+import com.veaer.gank.data.VDay;
 import com.veaer.gank.model.VDate;
-import com.veaer.gank.model.VFeed;
-import com.veaer.gank.model.VPicture;
-import com.veaer.gank.model.VVideo;
-import com.veaer.gank.request.VolleyRequestManager;
-import com.veaer.gank.util.DateUtil;
-import com.veaer.gank.util.URLProvider;
 import com.veaer.gank.widget.BaseActivity;
 
-import org.json.JSONObject;
-
-import java.util.List;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Veaer on 15/8/31.
  */
 public class SplashActivity extends BaseActivity {
     int goCount = 1;
+    VDay vDay;
     VDate vDate;
-    VPicture vPicture;
-    VVideo vVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,36 +29,31 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.splash_activity_gank);
         MobclickAgent.updateOnlineConfig(this);
         AnalyticsConfig.enableEncrypt(true);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        new Handler().postDelayed(() -> goHome(), 1000);
         loadData();
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                goHome();
-            }
-
-        }, 3000);
     }
 
     public void loadData() {
-        VolleyRequestManager.getInstance().get(URLProvider.ALLLURL + "1/1", null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                List<VFeed> feedList = JSON.parseArray(response.optString("results"), VFeed.class);
-                vDate = DateUtil.publish2date(feedList.get(0).publishedAt);
-                VolleyRequestManager.getInstance().get(URLProvider.DAYURL + vDate.TIME, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if (!response.optBoolean("error")) {
-                            JSONObject results = response.optJSONObject("results");
-                            vPicture = JSON.parseArray(results.optString("福利"), VPicture.class).get(0);
-                            vVideo = JSON.parseArray(results.optString("休息视频"), VVideo.class).get(0);
-                            goHome();
-                        }
-                    }
+        Subscription splash = mLine.getSplashData()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(vAll -> getTodayData(vAll));
+        addSubscription(splash);
+    }
+
+    public void getTodayData(VAll vAll) {
+        vDate = new VDate(vAll.results.get(0).publishedAt);
+        Subscription today = mLine.getDayData(vDate.YEAR, vDate.MONTH, vDate.DAY)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(vDay -> {
+                    this.vDay = vDay;
+                    goHome();
                 });
-            }
-        });
+        addSubscription(today);
     }
 
     public void goHome() {
@@ -75,9 +62,8 @@ public class SplashActivity extends BaseActivity {
             return;
         }
         Intent homeIntent = new Intent(SplashActivity.this, HomeActivity.class);
-        homeIntent.putExtra("current_time", vDate);
-        homeIntent.putExtra("current_picture", vPicture);
-        homeIntent.putExtra("current_video", vVideo);
+        mData.put("current_day", vDay);
+        mData.put("current_date", vDate);
         startActivity(homeIntent);
         finish();
     }

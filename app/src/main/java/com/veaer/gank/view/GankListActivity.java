@@ -19,7 +19,6 @@ import com.veaer.gank.model.VDate;
 import com.veaer.gank.model.VPicture;
 import com.veaer.gank.model.VVideo;
 import com.veaer.gank.request.VolleyRequestManager;
-import com.veaer.gank.util.DateUtil;
 import com.veaer.gank.util.ToastUtils;
 import com.veaer.gank.util.URLProvider;
 import com.veaer.gank.widget.BaseViewHolder;
@@ -206,7 +205,6 @@ public class GankListActivity extends ToolbarActivity {
 
         public void bindViews(VPicture mPicture, VVideo mVideo) {
             mPic = mPicture;
-            vDate = DateUtil.publish2date(mPicture.publishedAt);
             yearTv.setText(vDate.YEAR);
             monthTv.setText(vDate.MONTH);
             dayTv.setText(vDate.DAY);

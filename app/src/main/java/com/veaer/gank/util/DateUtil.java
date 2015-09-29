@@ -1,7 +1,5 @@
 package com.veaer.gank.util;
 
-import com.veaer.gank.model.VDate;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,9 +10,6 @@ import java.util.Date;
  */
 public class DateUtil {
 
-    public static VDate publish2date(String published) {
-        return new VDate(published);
-    }
     public static String getToday() {
         return toDate(new Date());
     }

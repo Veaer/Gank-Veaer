@@ -6,52 +6,50 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.veaer.gank.R;
+import com.veaer.gank.data.VDay;
 import com.veaer.gank.model.VDate;
-import com.veaer.gank.model.VPicture;
-import com.veaer.gank.model.VVideo;
 import com.veaer.gank.widget.BaseActivity;
 import com.veaer.gank.widget.HiImageView;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Veaer on 15/8/31.
  */
 public class HomeActivity extends BaseActivity {
+    @Bind(R.id.home_pic)
     HiImageView picIv;
+    @Bind(R.id.home_pic_via)
     TextView picViaTv;
+    @Bind(R.id.home_video)
     TextView videoTv;
+    @Bind(R.id.home_video_via)
     TextView videoViaTv;
+    @Bind(R.id.home_to_list)
     TextView listTv;
+    @Bind(R.id.home_video_layout)
     RelativeLayout videoRl;
+
+    VDay vDay;
     VDate vDate;
-    VPicture vPicture;
-    VVideo vVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity_gank);
-        vDate = (VDate)getIntent().getSerializableExtra("current_time");
-        vPicture = (VPicture)getIntent().getSerializableExtra("current_picture");
-        vVideo = (VVideo)getIntent().getSerializableExtra("current_video");
-        getViews();
+        ButterKnife.bind(this);
+        vDay = mData.get("current_day");
+        vDate = mData.get("current_date");
         initView();
     }
 
-    public void getViews() {
-        picIv = $(R.id.home_pic);
-        picIv.setAspectRatio(0.8F);
-        picViaTv = $(R.id.home_pic_via);
-        videoTv = $(R.id.home_video);
-        videoViaTv = $(R.id.home_video_via);
-        videoRl = $(R.id.home_video_layout);
-        listTv = $(R.id.home_to_list);
-    }
-
     public void initView() {
-        picIv.loadImage(vPicture.url);
-        picViaTv.setText("via." + vPicture.who);
-        videoTv.setText(vVideo.desc);
-        videoViaTv.setText(vDate.TIME  + "  via." + vVideo.who);
+        picIv.setAspectRatio(0.8F);
+        picIv.loadImage(vDay.results.picList.get(0).url);
+        picViaTv.setText("via." + vDay.results.picList.get(0).who);
+        videoTv.setText(vDay.results.videoList.get(0).desc);
+        videoViaTv.setText(vDate.TIME  + "  via." + vDay.results.videoList.get(0).who);
         videoRl.setOnClickListener(v -> listener("video"));
         listTv.setOnClickListener(v -> listener("list"));
     }
@@ -60,8 +58,8 @@ public class HomeActivity extends BaseActivity {
         Intent intent;
         if(label.equals("video")) {
             intent = new Intent(HomeActivity.this, GankVideoActivity.class);
-            intent.putExtra("video_url", vVideo.url);
-            intent.putExtra("video_title", vVideo.desc);
+            intent.putExtra("video_url", vDay.results.videoList.get(0).url);
+            intent.putExtra("video_title", vDay.results.videoList.get(0).desc);
         } else {
             intent = new Intent(HomeActivity.this, GankListActivity.class);
         }

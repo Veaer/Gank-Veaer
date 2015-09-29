@@ -8,12 +8,21 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
+import com.veaer.gank.request.Line;
+import com.veaer.gank.request.LineFactory;
+import com.veaer.gank.util.DataProvider;
+
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Veaer on 15/8/15.
  */
 public class BaseActivity extends AppCompatActivity {
     protected boolean isKitkat = false;
+    protected final static Line mLine = LineFactory.getSingleton();
+    protected CompositeSubscription mCompositeSubscription;
+    protected final static DataProvider mData = DataProvider.getInstance();
 
     public < T extends View> T $(int id) {
         return (T)super.findViewById(id);
@@ -51,7 +60,27 @@ public class BaseActivity extends AppCompatActivity {
         MobclickAgent.onPause(this);
     }
 
-//    public Typeface getFont() {
-//        return Typeface.createFromAsset(getAssets(), "fonts/SiYuan.otf");
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (this.mCompositeSubscription != null) {
+            this.mCompositeSubscription.unsubscribe();
+        }
+    }
+
+    public CompositeSubscription getCompositeSubscription() {
+        if (this.mCompositeSubscription == null) {
+            this.mCompositeSubscription = new CompositeSubscription();
+        }
+
+        return this.mCompositeSubscription;
+    }
+
+    public void addSubscription(Subscription s) {
+        if (this.mCompositeSubscription == null) {
+            this.mCompositeSubscription = new CompositeSubscription();
+        }
+
+        this.mCompositeSubscription.add(s);
+    }
 }
