@@ -12,21 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.android.volley.Response;
 import com.veaer.gank.App;
 import com.veaer.gank.R;
 import com.veaer.gank.model.VFeed;
 import com.veaer.gank.model.VToday;
 import com.veaer.gank.model.VVideo;
-import com.veaer.gank.request.VolleyRequestManager;
 import com.veaer.gank.util.StringStyleUtil;
-import com.veaer.gank.util.URLProvider;
 import com.veaer.gank.widget.BaseViewHolder;
 import com.veaer.gank.widget.HiImageView;
 import com.veaer.gank.widget.ToolbarActivity;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,36 +76,36 @@ public class GankDetailActivity extends ToolbarActivity {
 
 
     public void initView() {
-        VolleyRequestManager.getInstance().getNoJson(URLProvider.VIDEOIMGURL + time, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                vToday = new VToday(response.optString("data"));
-                dataList.add(vToday);
-                VolleyRequestManager.getInstance().get(URLProvider.DAYURL + time, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        if(!response.optBoolean("error")) {
-                            category = JSON.parseArray(response.optString("category"), String.class);
-                            JSONObject results = response.optJSONObject("results");
-                            List<Object> videoList = new ArrayList<>();
-                            List<Object> feedList = new ArrayList<>();
-                            for(String cate : category) {
-                                if(cate.contains("视频")) {
-                                    videoList.add(cate);
-                                    videoList.addAll(JSON.parseArray(results.optString(cate), VVideo.class));
-                                } else if(!cate.contains("福利")) {
-                                    feedList.add(cate);
-                                    feedList.addAll(JSON.parseArray(results.optString(cate), VFeed.class));
-                                }
-                            }
-                            dataList.addAll(feedList);
-                            dataList.addAll(videoList);
-                            gankDetailAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-            }
-        });
+//        VolleyRequestManager.getInstance().getNoJson(URLProvider.VIDEOIMGURL + time, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                vToday = new VToday(response.optString("data"));
+//                dataList.add(vToday);
+//                VolleyRequestManager.getInstance().get(URLProvider.DAYURL + time, null, new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        if(!response.optBoolean("error")) {
+//                            category = JSON.parseArray(response.optString("category"), String.class);
+//                            JSONObject results = response.optJSONObject("results");
+//                            List<Object> videoList = new ArrayList<>();
+//                            List<Object> feedList = new ArrayList<>();
+//                            for(String cate : category) {
+//                                if(cate.contains("视频")) {
+//                                    videoList.add(cate);
+//                                    videoList.addAll(JSON.parseArray(results.optString(cate), VVideo.class));
+//                                } else if(!cate.contains("福利")) {
+//                                    feedList.add(cate);
+//                                    feedList.addAll(JSON.parseArray(results.optString(cate), VFeed.class));
+//                                }
+//                            }
+//                            dataList.addAll(feedList);
+//                            dataList.addAll(videoList);
+//                            gankDetailAdapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                });
+//            }
+//        });
     }
 
     public class GankDetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {

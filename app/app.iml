@@ -8,7 +8,7 @@
     </facet>
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="veaerDebug" />
+        <option name="SELECTED_BUILD_VARIANT" value="VeaerDebug" />
         <option name="SELECTED_TEST_ARTIFACT" value="_android_test_" />
         <option name="ASSEMBLE_TASK_NAME" value="assembleVeaerDebug" />
         <option name="COMPILE_JAVA_TASK_NAME" value="compileVeaerDebugSources" />
@@ -27,15 +27,15 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/retrolambda/veaerDebug" />
-    <output-test url="file://$MODULE_DIR$/build/retrolambda/veaerDebugAndroidTest" />
+    <output url="file://$MODULE_DIR$/build/retrolambda/VeaerDebug" />
+    <output-test url="file://$MODULE_DIR$/build/retrolambda/VeaerDebugAndroidTest" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/veaer/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/veaer/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/veaer/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/veaer/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/veaer/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/Veaer/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/Veaer/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/Veaer/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/Veaer/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/Veaer/debug" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/veaer/debug" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/veaerDebug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/veaerDebug/resources" type="java-resource" />
@@ -44,11 +44,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/veaerDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/veaerDebug/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/veaerDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/veaer/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/veaer/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/veaer/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/veaer/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/veaer/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/Veaer/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/Veaer/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/Veaer/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/Veaer/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/Veaer/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/veaer/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/veaer/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/veaer/resources" type="java-resource" />
@@ -135,14 +135,13 @@
     <orderEntry type="library" exported="" name="library-1.2" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.0.13" level="project" />
-    <orderEntry type="library" exported="" name="library-1.0.17" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="imagepipeline-0.6.1" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="imagepipeline-okhttp-0.5.0" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="analytics-5.6.1" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="fresco-0.6.1" level="project" />
   </component>
 </module>

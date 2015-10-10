@@ -5,10 +5,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 
+import com.veaer.gank.R;
+
+import butterknife.Bind;
+
 
 public abstract class ToolbarActivity extends BaseActivity {
 
+    @Bind(R.id.app_bar_layout)
     protected AppBarLayout mAppBar;
+    @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
     protected boolean mIsHidden = false;
 

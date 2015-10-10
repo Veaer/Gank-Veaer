@@ -12,7 +12,6 @@ import com.veaer.gank.widget.BaseActivity;
 import com.veaer.gank.widget.HiImageView;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by Veaer on 15/8/31.
@@ -35,10 +34,13 @@ public class HomeActivity extends BaseActivity {
     VDate vDate;
 
     @Override
+    public int getContentViewID() {
+        return R.layout.home_activity_gank;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_activity_gank);
-        ButterKnife.bind(this);
         vDay = mData.get("current_day");
         vDate = mData.get("current_date");
         initView();

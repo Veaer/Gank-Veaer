@@ -7,7 +7,6 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.squareup.okhttp.OkHttpClient;
-import com.veaer.gank.request.VolleyUtil;
 import com.veaer.gank.util.LocalDisplay;
 
 /**
@@ -20,10 +19,6 @@ public class App extends Application {
     @Override public void onCreate() {
         super.onCreate();
         sContext = this;
-
-        //快速debug
-        //初始化Volley
-        VolleyUtil.initialize(sContext);
 
         //初始化 Fresco
         OkHttpClient okHttpClient = new OkHttpClient();

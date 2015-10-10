@@ -22,3 +22,106 @@
 -keep public class com.veaer.gank.R$*{
 public static final int *;
 }
+-dontwarn com.squareup.okhttp.**
+
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+-keepattributes *Annotation*
+
+-keep public class com.umeng.fb.ui.ThreadView {}
+
+-keep class com.veaer.gank.BuildConfig { *; }
+-keep public class * extends android.os.Binder
+
+# Keep the support library
+-keep class android.support.** { *; }
+-keep interface android.support.** { *; }
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+-keepattributes EnclosingMethod
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.stream.** { *; }
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keepattributes Signature
+-keep class **.R$* {*;}
+-ignorewarnings
+
+-verbose
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-keep class android.support.v8.renderscript.** { *; }
+
+# Remove logging calls
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
+}
+
+# For Guava:
+-dontwarn javax.annotation.**
+-dontwarn javax.inject.**
+-dontwarn sun.misc.Unsafe
+
+# For RxJava:
+-dontwarn org.mockito.**
+-dontwarn org.junit.**
+-dontwarn org.robolectric.**
+
+
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+-dontwarn com.squareup.okhttp.**
+
+-dontwarn rx.**
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+-keepclasseswithmembers class * {
+    @retrofit.http.* <methods>;
+}
+
+-keep class sun.misc.Unsafe { *; }
+
+-dontwarn java.lang.invoke.*
+
+# 使用注解
+-keepattributes *Annotation*,Signature
+
+# 保持混淆时类的实名及行号(——————— 调试时打开 ———————)
+-keepattributes SourceFile,LineNumberTable
+
+# 枚举需要keep see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    **[] $VALUES;
+    public *;
+}

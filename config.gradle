@@ -39,7 +39,6 @@ ext {
             "rxandroid"        : "io.reactivex:rxandroid:1.0.1",
             "butterknife"      : "com.jakewharton:butterknife:7.0.1",
             "numberprogressbar": "com.daimajia.numberprogressbar:library:1.2@aar",
-            "umeng-analytics"  : "com.umeng.analytics:analytics:latest.integration",
-            "volley"           : "com.mcxiaoke.volley:library:1.0.17"
+            "umeng-analytics"  : "com.umeng.analytics:analytics:latest.integration"
     ]
 }

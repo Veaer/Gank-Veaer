@@ -1,17 +1,15 @@
 package com.veaer.gank.widget;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
 import com.veaer.gank.request.Line;
 import com.veaer.gank.request.LineFactory;
 import com.veaer.gank.util.DataProvider;
 
+import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -19,7 +17,8 @@ import rx.subscriptions.CompositeSubscription;
  * Created by Veaer on 15/8/15.
  */
 public class BaseActivity extends AppCompatActivity {
-    protected boolean isKitkat = false;
+    public static String TAG;
+    protected String[] headWhiteList = {};
     protected final static Line mLine = LineFactory.getSingleton();
     protected CompositeSubscription mCompositeSubscription;
     protected final static DataProvider mData = DataProvider.getInstance();
@@ -40,12 +39,11 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            isKitkat = true;
+        if(getContentViewID() != 0) {
+            setContentView(getContentViewID());
+            ButterKnife.bind(this);
         }
+        TAG = this.getClass().getSimpleName();
     }
 
     @Override
@@ -63,6 +61,9 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(getContentViewID() != 0) {
+            ButterKnife.unbind(this);
+        }
         if (this.mCompositeSubscription != null) {
             this.mCompositeSubscription.unsubscribe();
         }
@@ -83,4 +84,9 @@ public class BaseActivity extends AppCompatActivity {
 
         this.mCompositeSubscription.add(s);
     }
+
+    public int getContentViewID() {
+        return 0;
+    }
+
 }
