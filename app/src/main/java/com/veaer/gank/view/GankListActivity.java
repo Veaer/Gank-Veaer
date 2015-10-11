@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.veaer.gank.App;
 import com.veaer.gank.R;
 import com.veaer.gank.data.VAll;
@@ -17,7 +19,6 @@ import com.veaer.gank.model.VDate;
 import com.veaer.gank.model.VFeeds;
 import com.veaer.gank.util.ToastUtils;
 import com.veaer.gank.widget.BaseViewHolder;
-import com.veaer.gank.widget.HiImageView;
 import com.veaer.gank.widget.HiSwipeRefreshLayout;
 import com.veaer.gank.widget.ToolbarActivity;
 
@@ -106,12 +107,13 @@ public class GankListActivity extends ToolbarActivity {
                     }
                     gankListAdapter.notifyDataSetChanged();
                     setRefreshing(false);
-                });
+                }, throwable -> loadError(throwable));
         addSubscription(s);
     }
 
     public VAll mixPicVideo(VAll pic, VAll video) {
-        for (int i = 0; i < pic.results.size(); i++) {
+        int maxLength = pic.results.size() < video.results.size() ? pic.results.size() : video.results.size();
+        for (int i = 0; i < maxLength; i++) {
             VFeeds f = pic.results.get(i);
             f.desc = video.results.get(i).desc;
         }
@@ -185,7 +187,7 @@ public class GankListActivity extends ToolbarActivity {
         @Bind(R.id.day)
         TextView dayTv;
         @Bind(R.id.picture)
-        HiImageView pictureIV;
+        ImageView pictureIV;
         VFeeds vFeeds;
 
         public GankItemViewHolder(View view) {
@@ -208,7 +210,11 @@ public class GankListActivity extends ToolbarActivity {
             monthTv.setText(vDate.getMonth());
             dayTv.setText(vDate.DAY + "");
             descTv.setText(vFeeds.desc);
-            pictureIV.loadImage(vFeeds.url);
+            Glide.with(mActivity)
+                    .load(vFeeds.url)
+                    .centerCrop()
+                    .placeholder(R.mipmap.gank_launcher)
+                    .into(pictureIV);
         }
     }
 }

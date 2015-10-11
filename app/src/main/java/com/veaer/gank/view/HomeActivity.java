@@ -2,23 +2,27 @@ package com.veaer.gank.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.veaer.gank.R;
+import com.veaer.gank.data.VAll;
 import com.veaer.gank.data.VDay;
 import com.veaer.gank.model.VDate;
 import com.veaer.gank.widget.BaseActivity;
-import com.veaer.gank.widget.HiImageView;
 
 import butterknife.Bind;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Veaer on 15/8/31.
  */
 public class HomeActivity extends BaseActivity {
     @Bind(R.id.home_pic)
-    HiImageView picIv;
+    ImageView picIv;
     @Bind(R.id.home_pic_via)
     TextView picViaTv;
     @Bind(R.id.home_video)
@@ -41,14 +45,11 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        vDay = mData.get("current_day");
-        vDate = mData.get("current_date");
-        initView();
+        loadData();
     }
 
     public void initView() {
-        picIv.setAspectRatio(0.8F);
-        picIv.loadImage(vDay.results.picList.get(0).url);
+        Glide.with(mActivity).load(vDay.results.picList.get(0).url).into(picIv);
         picViaTv.setText("via." + vDay.results.picList.get(0).who);
         videoTv.setText(vDay.results.videoList.get(0).desc);
         videoViaTv.setText(vDate.TIME  + "  via." + vDay.results.videoList.get(0).who);
@@ -67,5 +68,23 @@ public class HomeActivity extends BaseActivity {
         }
         startActivity(intent);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+    }
+
+    public void loadData() {
+        Subscription splash = mLine.getSplashData()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(vAll -> getTodayData(vAll), throwable -> loadError(throwable));
+        addSubscription(splash);
+    }
+
+    public void getTodayData(VAll vAll) {
+        vDate = new VDate(vAll.results.get(0).publishedAt);
+        Subscription today = mLine.getDayData(vDate.YEAR, vDate.MONTH, vDate.DAY)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(vDay -> {
+                    this.vDay = vDay;
+                    initView();
+                }, throwable -> loadError(throwable));
+        addSubscription(today);
     }
 }

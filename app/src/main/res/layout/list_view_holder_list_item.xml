@@ -86,10 +86,8 @@
         android:textColor="@color/md_white_1000"
         android:id="@+id/desc"/>
 
-    <com.veaer.gank.widget.HiImageView
+    <ImageView
         android:id="@+id/picture"
-        android:scaleType="centerInside"
-        app:placeholderImage="@mipmap/gank_launcher"
         android:layout_width="match_parent"
         android:layout_height="250dp" />
 </LinearLayout>

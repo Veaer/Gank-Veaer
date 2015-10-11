@@ -1,5 +1,6 @@
 package com.veaer.gank.widget;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,6 +9,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.veaer.gank.request.Line;
 import com.veaer.gank.request.LineFactory;
 import com.veaer.gank.util.DataProvider;
+import com.veaer.gank.util.ToastUtils;
 
 import butterknife.ButterKnife;
 import rx.Subscription;
@@ -18,6 +20,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class BaseActivity extends AppCompatActivity {
     public static String TAG;
+    public Activity mActivity;
     protected String[] headWhiteList = {};
     protected final static Line mLine = LineFactory.getSingleton();
     protected CompositeSubscription mCompositeSubscription;
@@ -43,6 +46,7 @@ public class BaseActivity extends AppCompatActivity {
             setContentView(getContentViewID());
             ButterKnife.bind(this);
         }
+        this.mActivity = this;
         TAG = this.getClass().getSimpleName();
     }
 
@@ -89,4 +93,7 @@ public class BaseActivity extends AppCompatActivity {
         return 0;
     }
 
+    public void loadError(Throwable throwable) {
+        ToastUtils.showShort("貌似网络出了一点问题，快喝口水冷静一下\uD83D\uDE02");
+    }
 }

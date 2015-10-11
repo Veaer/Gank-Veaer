@@ -16,8 +16,7 @@ public class LocalDisplay {
     public static int SCREEN_HEIGHT_DP;
     private static boolean sInitialed;
 
-    public LocalDisplay() {
-    }
+    public LocalDisplay() {}
 
     public static void init(Context context) {
         if(!sInitialed && context != null) {

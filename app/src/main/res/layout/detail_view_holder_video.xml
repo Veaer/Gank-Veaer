@@ -32,7 +32,7 @@
 
     </LinearLayout>
 
-    <com.veaer.gank.widget.HiImageView
+    <ImageView
         android:id="@+id/detail_video_cover"
         android:layout_gravity="center_horizontal"
         android:layout_width="300dp"

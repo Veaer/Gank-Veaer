@@ -85,7 +85,7 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def fileName = "Gank_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        def fileName = "Gank_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }
@@ -116,7 +116,7 @@ dependencies {
     compile rootProject.ext.dependencies["design"]
     compile rootProject.ext.dependencies["appcompat-v7"]
     compile rootProject.ext.dependencies["recyclerview-v7"]
-    compile rootProject.ext.dependencies["fresco"]
+    compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["okhttp"]
     compile rootProject.ext.dependencies["fastjson"]
     compile rootProject.ext.dependencies["retrofit"]

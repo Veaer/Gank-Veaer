@@ -10,8 +10,10 @@ import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.veaer.gank.App;
 import com.veaer.gank.R;
 import com.veaer.gank.model.VFeed;
@@ -19,7 +21,6 @@ import com.veaer.gank.model.VToday;
 import com.veaer.gank.model.VVideo;
 import com.veaer.gank.util.StringStyleUtil;
 import com.veaer.gank.widget.BaseViewHolder;
-import com.veaer.gank.widget.HiImageView;
 import com.veaer.gank.widget.ToolbarActivity;
 
 import java.util.ArrayList;
@@ -166,7 +167,7 @@ public class GankDetailActivity extends ToolbarActivity {
 
     public class TitleViewHolder extends BaseViewHolder {
         TextView titleTv;
-        HiImageView titleBg;
+        ImageView titleBg;
 
         public TitleViewHolder(View view) {
             super(view);
@@ -177,13 +178,12 @@ public class GankDetailActivity extends ToolbarActivity {
             titleTv = $(R.id.detail_title);
 //            titleTv.setTypeface(getFont());
             titleBg = $(R.id.title_bg);
-            titleBg.setAspectRatio(0.7f);
         }
 
         @Override
         public void bindViews(Object object, Object... args) {
             titleTv.setText(vToday.pageTitle);
-            titleBg.loadImage(titleBgUrl);
+            Glide.with(mActivity).load(titleBgUrl).into(titleBg);
         }
     }
 
@@ -239,7 +239,7 @@ public class GankDetailActivity extends ToolbarActivity {
     }
 
     public class VideoViewHolder extends BaseViewHolder {
-        HiImageView videoCover;
+        ImageView videoCover;
         TextView labelTv;
         String url;
         String title;
@@ -272,7 +272,7 @@ public class GankDetailActivity extends ToolbarActivity {
             labelTv.setText(builder);
             if(vToday.hasPreview) {
                 url = vVideo.url;
-                videoCover.loadImage(vToday.imagePreview);
+                Glide.with(mActivity).load(vToday.imagePreview).into(videoCover);
             } else {
                 url = vVideo.url;
 //                url = vToday.imagePreview;

@@ -44,8 +44,9 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}"/>
+
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".view.HomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -53,11 +54,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".view.HomeActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".view.GankListActivity"
