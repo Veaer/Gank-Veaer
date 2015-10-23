@@ -1,7 +1,6 @@
 package com.veaer.gank.view;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,7 @@ import com.veaer.gank.App;
 import com.veaer.gank.R;
 import com.veaer.gank.data.VAll;
 import com.veaer.gank.model.VDate;
-import com.veaer.gank.model.VFeeds;
+import com.veaer.gank.model.VFeed;
 import com.veaer.gank.util.ToastUtils;
 import com.veaer.gank.widget.BaseViewHolder;
 import com.veaer.gank.widget.HiSwipeRefreshLayout;
@@ -41,7 +40,7 @@ public class GankListActivity extends ToolbarActivity {
     int nextPage = 1;
     boolean canAdd = true;
     GankListAdapter gankListAdapter = new GankListAdapter();
-    List<VFeeds> feedsList = new ArrayList<>();
+    List<VFeed> feedsList = new ArrayList<>();
 
     @Override
     public int getContentViewID() {
@@ -51,7 +50,6 @@ public class GankListActivity extends ToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initToolBar();
         initViews();
         initData(1, true);
     }
@@ -65,16 +63,6 @@ public class GankListActivity extends ToolbarActivity {
         refreshLayout.setColorSchemeResources(R.color.refresh_progress_3,
                 R.color.refresh_progress_2, R.color.refresh_progress_1);
         refreshLayout.setOnRefreshListener(() -> initData(1, true));
-    }
-
-    public void initToolBar() {
-        if(Build.VERSION.SDK_INT >= 21) {
-            mAppBar.setElevation(10.6f);
-        }
-        mToolbar.setTitle("HISTORY");
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.theme_text_color));
-        mToolbar.setOnClickListener(view -> onToolbarClick());
-        setSupportActionBar(mToolbar);
     }
 
     public void initData(int page, boolean is_refresh) {
@@ -114,7 +102,7 @@ public class GankListActivity extends ToolbarActivity {
     public VAll mixPicVideo(VAll pic, VAll video) {
         int maxLength = pic.results.size() < video.results.size() ? pic.results.size() : video.results.size();
         for (int i = 0; i < maxLength; i++) {
-            VFeeds f = pic.results.get(i);
+            VFeed f = pic.results.get(i);
             f.desc = video.results.get(i).desc;
         }
         return pic;
@@ -188,7 +176,7 @@ public class GankListActivity extends ToolbarActivity {
         TextView dayTv;
         @Bind(R.id.picture)
         ImageView pictureIV;
-        VFeeds vFeeds;
+        VFeed vFeed;
 
         public GankItemViewHolder(View view) {
             super(view);
@@ -198,20 +186,20 @@ public class GankListActivity extends ToolbarActivity {
         public void toActivity() {
             Intent intent = new Intent(getApplicationContext(), GankDetailActivity.class);
             intent.putExtra("current_time", vDate.TIME);
-            intent.putExtra("title_bg", vFeeds.url);
+            intent.putExtra("title_bg", vFeed.url);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
         }
 
-        public void bindViews(VFeeds vFeeds) {
-            this.vFeeds = vFeeds;
-            vDate = new VDate(vFeeds.publishedAt);
+        public void bindViews(VFeed vFeed) {
+            this.vFeed = vFeed;
+            vDate = new VDate(vFeed.publishedAt);
             yearTv.setText(vDate.YEAR + "");
             monthTv.setText(vDate.getMonth());
             dayTv.setText(vDate.DAY + "");
-            descTv.setText(vFeeds.desc);
+            descTv.setText(vFeed.desc);
             Glide.with(mActivity)
-                    .load(vFeeds.url)
+                    .load(vFeed.url)
                     .centerCrop()
                     .placeholder(R.mipmap.gank_launcher)
                     .into(pictureIV);

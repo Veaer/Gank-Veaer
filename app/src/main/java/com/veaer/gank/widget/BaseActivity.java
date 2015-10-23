@@ -1,6 +1,7 @@
 package com.veaer.gank.widget;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,6 +22,7 @@ import rx.subscriptions.CompositeSubscription;
 public class BaseActivity extends AppCompatActivity {
     public static String TAG;
     public Activity mActivity;
+    public Context mContext;
     protected String[] headWhiteList = {};
     protected final static Line mLine = LineFactory.getSingleton();
     protected CompositeSubscription mCompositeSubscription;
@@ -46,7 +48,7 @@ public class BaseActivity extends AppCompatActivity {
             setContentView(getContentViewID());
             ButterKnife.bind(this);
         }
-        this.mActivity = this;
+        this.mContext = this.mActivity = this;
         TAG = this.getClass().getSimpleName();
     }
 

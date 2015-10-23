@@ -33,11 +33,9 @@ ext {
             "design"           : "com.android.support:design:22.2.1",
             "recyclerview-v7"  : "com.android.support:recyclerview-v7:22.2.1",
             "okhttp"           : "com.squareup.okhttp:okhttp:2.3.0",
-            "fastjson"         : "com.alibaba:fastjson:1.1.45.android",
             "retrofit"         : "com.squareup.retrofit:retrofit:1.9.0",
             "rxandroid"        : "io.reactivex:rxandroid:1.0.1",
             "butterknife"      : "com.jakewharton:butterknife:7.0.1",
-            "numberprogressbar": "com.daimajia.numberprogressbar:library:1.2@aar",
             "umeng-analytics"  : "com.umeng.analytics:analytics:latest.integration",
             "glide"            : "com.github.bumptech.glide:glide:3.6.1"
         ]

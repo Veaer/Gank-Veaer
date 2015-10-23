@@ -76,8 +76,7 @@
             android:name=".view.GankVideoActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTop"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:screenOrientation="portrait"  >
         </activity>
     </application>
 

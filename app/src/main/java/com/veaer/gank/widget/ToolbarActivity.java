@@ -1,5 +1,7 @@
 package com.veaer.gank.widget;
 
+import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -17,6 +19,25 @@ public abstract class ToolbarActivity extends BaseActivity {
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
     protected boolean mIsHidden = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initToolBar();
+
+    }
+
+    public void initToolBar() {
+        if(Build.VERSION.SDK_INT >= 21) {
+            mAppBar.setElevation(10.6f);
+        }
+        mToolbar.setTitle("HISTORY");
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.theme_text_color));
+        mToolbar.setOnClickListener(view -> onToolbarClick());
+        setSupportActionBar(mToolbar);
+    }
+
+    public void onToolbarClick() {}
 
     protected void setAppBarAlpha(float alpha) {
         mAppBar.setAlpha(alpha);

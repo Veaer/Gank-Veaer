@@ -19,9 +19,7 @@
 -keepclassmembers class * {
    public <init>(org.json.JSONObject);
 }
--keep public class com.veaer.gank.R$*{
-public static final int *;
-}
+
 -dontwarn com.squareup.okhttp.**
 
 -keep class butterknife.** { *; }
@@ -36,12 +34,30 @@ public static final int *;
     @butterknife.* <methods>;
 }
 
--keepattributes *Annotation*
 
--keep public class com.umeng.fb.ui.ThreadView {}
+
+-keep public class com.veaer.gank.R$*{
+public static final int *;
+}
 
 -keep class com.veaer.gank.BuildConfig { *; }
 -keep public class * extends android.os.Binder
+
+
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+    **[] $VALUES;
+    public *;
+}
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+    **[] $VALUES;
+    public *;
+}
+
+
 
 # Keep the support library
 -keep class android.support.** { *; }
@@ -74,7 +90,14 @@ public static final int *;
     native <methods>;
 }
 
+-keep class me.drakeet.meizhi.** { *;}
+
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
 -keep class android.support.v8.renderscript.** { *; }
+
 
 # Remove logging calls
 -assumenosideeffects class android.util.Log {
@@ -124,4 +147,14 @@ public static final int *;
 -keepclassmembers enum * {
     **[] $VALUES;
     public *;
+}
+
+# umeng
+-keepclassmembers class * {
+   public <init>(org.json.JSONObject);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
 }

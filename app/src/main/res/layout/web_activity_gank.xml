@@ -14,14 +14,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.daimajia.numberprogressbar.NumberProgressBar
-            android:id="@+id/progressbar"
-            style="@style/NumberProgressBar_Funny_Orange"
-            android:layout_width="match_parent"
-            app:progress_reached_bar_height="2dp"
-            app:progress_text_size="0sp"
-            app:progress_text_visibility="invisible"
-            app:progress_unreached_bar_height="2dp"/>
 
         <WebView
             android:id="@+id/webView"

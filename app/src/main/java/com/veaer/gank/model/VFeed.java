@@ -1,13 +1,14 @@
 package com.veaer.gank.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * Created by Veaer on 15/8/19.
+ * Created by Veaer on 15/9/17.
  */
 public class VFeed implements Serializable {
     public String who;
-    public String publishedAt;
+    public Date publishedAt;
     public String desc;
     public String url;
     public String type;

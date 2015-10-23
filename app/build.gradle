@@ -61,7 +61,8 @@ android {
         debug {
             manifestPlaceholders = [
                     UMENG_APPKEY: "55e44716e0f55aa3a8004c5d",
-                    UMENG_MESSAGE_SECRET: "67100d31ce327abf16a8fb3258d5073f"
+                    UMENG_MESSAGE_SECRET: "67100d31ce327abf16a8fb3258d5073f",
+                    VIDEOJJ_KEY:properties.getProperty('VIDEOJJKEY')
             ]
 
         }
@@ -71,7 +72,8 @@ android {
 
             manifestPlaceholders = [
                     UMENG_APPKEY: "55e44716e0f55aa3a8004c5d",
-                    UMENG_MESSAGE_SECRET: "67100d31ce327abf16a8fb3258d5073f"
+                    UMENG_MESSAGE_SECRET: "67100d31ce327abf16a8fb3258d5073f",
+                    VIDEOJJ_KEY:properties.getProperty('VIDEOJJKEY')
             ]
 
             minifyEnabled false
@@ -90,6 +92,12 @@ android {
                     }
                 }
             }
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 
@@ -118,11 +126,8 @@ dependencies {
     compile rootProject.ext.dependencies["recyclerview-v7"]
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["okhttp"]
-    compile rootProject.ext.dependencies["fastjson"]
     compile rootProject.ext.dependencies["retrofit"]
     compile rootProject.ext.dependencies["rxandroid"]
     compile rootProject.ext.dependencies["butterknife"]
-    compile rootProject.ext.dependencies["numberprogressbar"]
     compile rootProject.ext.dependencies["umeng-analytics"]
-
 }

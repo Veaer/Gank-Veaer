@@ -4,13 +4,11 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.veaer.gank.R;
 import com.veaer.gank.widget.ToolbarActivity;
 
@@ -20,7 +18,6 @@ import com.veaer.gank.widget.ToolbarActivity;
  */
 public class GankWebActivity extends ToolbarActivity {
 
-    NumberProgressBar mProgressbar;
     WebView mWebView;
 
     Context mContext;
@@ -70,7 +67,6 @@ public class GankWebActivity extends ToolbarActivity {
     }
 
     public void getViews() {
-        mProgressbar = $(R.id.progressbar);
         mWebView = $(R.id.webView);
     }
 
@@ -105,9 +101,6 @@ public class GankWebActivity extends ToolbarActivity {
 
         @Override public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            mProgressbar.setProgress(newProgress);
-            if (newProgress == 100) { mProgressbar.setVisibility(View.GONE); }
-            else { mProgressbar.setVisibility(View.VISIBLE); }
         }
 
         @Override public void onReceivedTitle(WebView view, String title) {
