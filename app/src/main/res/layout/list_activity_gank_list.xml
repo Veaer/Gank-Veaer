@@ -1,5 +1,6 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/list_text_bg">
@@ -15,7 +16,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_gank_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/list_view_holder_list_item"/>
 
     </com.veaer.gank.widget.HiSwipeRefreshLayout>
 

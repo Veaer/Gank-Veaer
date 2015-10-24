@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -50,11 +52,12 @@ public class GankListActivity extends ToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initViews();
-        initData(1, true);
+        initGankViews();
+        initGankData(1, true);
+        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
     }
 
-    public void initViews() {
+    public void initGankViews() {
         gankListRv.setAdapter(gankListAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         gankListRv.setLayoutManager(linearLayoutManager);
@@ -62,10 +65,10 @@ public class GankListActivity extends ToolbarActivity {
 
         refreshLayout.setColorSchemeResources(R.color.refresh_progress_3,
                 R.color.refresh_progress_2, R.color.refresh_progress_1);
-        refreshLayout.setOnRefreshListener(() -> initData(1, true));
+        refreshLayout.setOnRefreshListener(() -> initGankData(1, true));
     }
 
-    public void initData(int page, boolean is_refresh) {
+    public void initGankData(int page, boolean is_refresh) {
         if(!canAdd) {
             ToastUtils.showShort("滑不动了哟");
             setRefreshing(false);
@@ -115,7 +118,11 @@ public class GankListActivity extends ToolbarActivity {
     public void setRefreshing(boolean refreshing) {
         if (!refreshing) {
             // 防止刷新消失太快，让子弹飞一会儿
-            refreshLayout.postDelayed(() -> refreshLayout.setRefreshing(false), 1000);
+            refreshLayout.postDelayed(() -> {
+                if(!this.isFinishing()) {
+                    refreshLayout.setRefreshing(false);
+                }
+            }, 1000);
         } else {
             refreshLayout.setRefreshing(true);
         }
@@ -128,7 +135,7 @@ public class GankListActivity extends ToolbarActivity {
                 if (!refreshLayout.isRefreshing() && isBottom) {
                     refreshLayout.setRefreshing(true);
                     nextPage++;
-                    initData(nextPage, false);
+                    initGankData(nextPage, false);
                 }
             }
         };
@@ -188,7 +195,6 @@ public class GankListActivity extends ToolbarActivity {
             intent.putExtra("current_time", vDate.TIME);
             intent.putExtra("title_bg", vFeed.url);
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
         }
 
         public void bindViews(VFeed vFeed) {
@@ -204,5 +210,28 @@ public class GankListActivity extends ToolbarActivity {
                     .placeholder(R.mipmap.gank_launcher)
                     .into(pictureIV);
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_gank, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_about) {
+            Intent aboutIntent = new Intent(this, AboutActivity.class);
+            startActivity(aboutIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public String getToolBarTitle() {
+        return "HISTORY";
     }
 }

@@ -3,6 +3,7 @@ package com.veaer.gank.widget;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
@@ -31,10 +32,22 @@ public abstract class ToolbarActivity extends BaseActivity {
         if(Build.VERSION.SDK_INT >= 21) {
             mAppBar.setElevation(10.6f);
         }
-        mToolbar.setTitle("HISTORY");
+        mToolbar.setTitle(getToolBarTitle());
         mToolbar.setTitleTextColor(getResources().getColor(R.color.theme_text_color));
         mToolbar.setOnClickListener(view -> onToolbarClick());
         setSupportActionBar(mToolbar);
+        if(canBack()) {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    public String getToolBarTitle() {
+        return "";
+    }
+
+    public boolean canBack() {
+        return false;
     }
 
     public void onToolbarClick() {}
