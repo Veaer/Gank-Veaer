@@ -54,12 +54,11 @@ public class GankListActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
         initGankViews();
         initGankData(1, true);
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
     }
 
     public void initGankViews() {
         gankListRv.setAdapter(gankListAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         gankListRv.setLayoutManager(linearLayoutManager);
         gankListRv.addOnScrollListener(getScrollToBottomListener(linearLayoutManager));
 
@@ -192,9 +191,10 @@ public class GankListActivity extends ToolbarActivity {
 
         public void toActivity() {
             Intent intent = new Intent(getApplicationContext(), GankDetailActivity.class);
-            intent.putExtra("current_time", vDate.TIME);
+            intent.putExtra("current_time", vDate);
             intent.putExtra("title_bg", vFeed.url);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
         }
 
         public void bindViews(VFeed vFeed) {
@@ -225,6 +225,7 @@ public class GankListActivity extends ToolbarActivity {
         if(id == R.id.action_about) {
             Intent aboutIntent = new Intent(this, AboutActivity.class);
             startActivity(aboutIntent);
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
             return true;
         }
         return super.onOptionsItemSelected(item);

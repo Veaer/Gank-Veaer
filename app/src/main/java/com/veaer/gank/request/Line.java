@@ -36,8 +36,6 @@ public interface Line {
 
     @GET("/day/{year}/{month}/{day}") Observable<VDay> getDayData(@Path("year") int year, @Path("month") int month, @Path("day") int day);
 
-    @GET("/day/{time}") Observable<VDay> getDayData(@Path("time") String time);
-
     @GET("/data/福利/10/{page}") Observable<VAll> getPicList(@Path("page") int page);
 
     @GET("/data/休息视频/10/{page}") Observable<VAll> getVideoData(@Path("page") int page);

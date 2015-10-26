@@ -1,16 +1,20 @@
 package com.veaer.gank.view;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.veaer.gank.R;
+import com.veaer.gank.util.ShareUtil;
 import com.veaer.gank.widget.ToolbarActivity;
+
+import butterknife.Bind;
 
 
 /**
@@ -18,20 +22,29 @@ import com.veaer.gank.widget.ToolbarActivity;
  */
 public class GankWebActivity extends ToolbarActivity {
 
+    @Bind(R.id.webView)
     WebView mWebView;
 
     Context mContext;
     String mUrl, mTitle;
 
     @Override
+    public boolean canBack() {
+        return true;
+    }
+
+    @Override
+    public int getContentViewID() {
+        return R.layout.web_activity_gank;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.web_activity_gank);
         mUrl = getIntent().getStringExtra("feed_url");
         mTitle = getIntent().getStringExtra("feed_title");
-        initToolBar();
-        getViews();
-        mContext = this;
+
+        mToolbar.setTitle(mTitle);
 
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -45,33 +58,29 @@ public class GankWebActivity extends ToolbarActivity {
 
         mWebView.loadUrl(mUrl);
 
-        if (mTitle != null) setTitle(mTitle);
     }
 
-    public void initToolBar() {
-        mToolbar = $(R.id.toolbar);
-        mAppBar = $(R.id.app_bar_layout);
-
-        if(Build.VERSION.SDK_INT >= 21) {
-            mAppBar.setElevation(10.6f);
-        }
-        mToolbar.setTitle(mTitle);
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.theme_text_color));
-        setSupportActionBar(mToolbar);
-        mToolbar.setOnClickListener(v -> goTop());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    public void goTop() {
+    public void onToolbarClick() {
         mWebView.scrollTo(0,0);
     }
 
-    public void getViews() {
-        mWebView = $(R.id.webView);
-    }
 
     private void refresh() {
         mWebView.reload();
+    }
+
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_share, menu);
+        return true;
+    }
+
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if(R.id.menu_share == item.getItemId()) {
+            ShareUtil.share(this, getString(R.string.share_url) + mUrl + getString(R.string.app_download));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

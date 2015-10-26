@@ -8,6 +8,8 @@
     <string name="to_history">查看往期</string>
     <string name="share">分享</string>
     <string name="share_words">我发现了一款非常"有用"的App「干客」，每天一张精选妹纸图、一个精选小视频，一篇程序猿干货，完全开源不收费，太赞了! 推荐~：http://fir.im/gankapp</string>
+    <string name="share_url">我发现了一篇好文章</string>
+    <string name="app_download">来自干客，下载：http://fir.im/gankapp</string>
     <string name="introduce">每天一张精选妹纸图、一个精选小视频（视频源地址播放,因为视频来源包含各大平台。。。着实不好统一播放器。。。），一篇程序猿精选干货。\n\n数据内容来源于代码家的 http://gank.io ，Veaer 完成 Android 端的开发和设计， 非常感谢drakeet。\n\n我的 GitHub: https://github.com/Veaer\n\n完全开源，如果你觉得不错，可以帮忙分享给你更多的朋友，这是我们最大的动力和支持，或者请我喝一杯咖啡（所谓的捐赠或打赏QAQ），非常感谢！\n\n支付宝： veaer.king@gmail.com （长按可选中复制）</string>
 
 </resources>

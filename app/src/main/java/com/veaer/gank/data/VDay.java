@@ -17,7 +17,10 @@ public class VDay extends VData {
         @SerializedName("iOS") public List<VFeed> iosList;
         @SerializedName("福利") public List<VFeed> picList;
         @SerializedName("Android") public List<VFeed> androidList;
-        @SerializedName("瞎推荐") public List<VFeed> newsList;
+        @SerializedName("拓展资源") public List<VFeed> newsList;
+        @SerializedName("瞎推荐") public List<VFeed> introsList;
         @SerializedName("休息视频") public List<VFeed> videoList;
+        @SerializedName("前端") public List<VFeed> frontList;
+        @SerializedName("App") public List<VFeed> appList;
     }
 }

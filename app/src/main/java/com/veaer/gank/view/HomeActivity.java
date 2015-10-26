@@ -60,9 +60,9 @@ public class HomeActivity extends BaseActivity {
     public void listener(String label) {
         Intent intent;
         if(label.equals("video")) {
-            intent = new Intent(HomeActivity.this, GankVideoActivity.class);
-            intent.putExtra("video_url", vDay.results.videoList.get(0).url);
-            intent.putExtra("video_title", vDay.results.videoList.get(0).desc);
+            intent = new Intent(HomeActivity.this, GankWebActivity.class);
+            intent.putExtra("feed_url", vDay.results.videoList.get(0).url);
+            intent.putExtra("feed_title", vDay.results.videoList.get(0).desc);
         } else {
             intent = new Intent(HomeActivity.this, GankListActivity.class);
         }
