@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".GankActivity">
+    <item
+        android:id="@+id/menu_refresh"
+        android:title="@string/refresh"
+        android:orderInCategory="97"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_share"
+        android:title="@string/share"
+        android:orderInCategory="98"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_open"
+        android:title="@string/open"
+        android:orderInCategory="99"
+        app:showAsAction="never"/>
+</menu>

@@ -1,10 +1,12 @@
 package com.veaer.gank.view;
 
-import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -12,6 +14,7 @@ import android.webkit.WebViewClient;
 
 import com.veaer.gank.R;
 import com.veaer.gank.util.ShareUtil;
+import com.veaer.gank.util.ToastUtils;
 import com.veaer.gank.widget.ToolbarActivity;
 
 import butterknife.Bind;
@@ -22,10 +25,8 @@ import butterknife.Bind;
  */
 public class GankWebActivity extends ToolbarActivity {
 
-    @Bind(R.id.webView)
-    WebView mWebView;
+    @Bind(R.id.webView) WebView mWebView;
 
-    Context mContext;
     String mUrl, mTitle;
 
     @Override
@@ -55,6 +56,7 @@ public class GankWebActivity extends ToolbarActivity {
         settings.setDomStorageEnabled(true);
         mWebView.setWebChromeClient(new ChromeClient());
         mWebView.setWebViewClient(new LoveClient());
+        mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         mWebView.loadUrl(mUrl);
 
@@ -70,15 +72,31 @@ public class GankWebActivity extends ToolbarActivity {
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_share, menu);
+        getMenuInflater().inflate(R.menu.menu_web, menu);
         return true;
     }
 
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if(R.id.menu_share == item.getItemId()) {
-            ShareUtil.share(this, getString(R.string.share_url) + mUrl + getString(R.string.app_download));
-            return true;
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_refresh:
+                refresh();
+                return true;
+            case R.id.menu_share:
+                ShareUtil.share(this, getString(R.string.share_url) + mUrl + getString(R.string.app_download));
+                return true;
+            case R.id.menu_open:
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                Uri uri = Uri.parse(mUrl);
+                intent.setData(uri);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    ToastUtils.showLong(R.string.open_fail);
+                }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

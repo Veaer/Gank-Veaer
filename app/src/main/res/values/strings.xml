@@ -7,6 +7,12 @@
     <string name="to_video">-->去看视频~</string>
     <string name="to_history">查看往期</string>
     <string name="share">分享</string>
+    <string name="refresh">刷新</string>
+    <string name="open">在其他浏览器打开</string>
+    <string name="open_fail">未找到相关应用</string>
+    <string name="save_pic">保存到本地？</string>
+    <string name="save">保存</string>
+    <string name="picture_has_save_to">图片已保存至 %s 文件夹</string>
     <string name="share_words">我发现了一款非常"有用"的App「干客」，每天一张精选妹纸图、一个精选小视频，一篇程序猿干货，完全开源不收费，太赞了! 推荐~：http://fir.im/gankapp</string>
     <string name="share_url">我发现了一篇好文章</string>
     <string name="app_download">来自干客，下载：http://fir.im/gankapp</string>

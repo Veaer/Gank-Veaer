@@ -27,9 +27,9 @@
             android:id="@+id/feed_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:padding="5dp"
-            android:textColor="@color/theme_primary"
+            android:textColor="@color/list_text_bg"
             android:lineSpacingMultiplier="1.5"
             tools:text="福利"/>
 

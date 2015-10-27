@@ -1,5 +1,6 @@
 package com.veaer.gank.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,13 +20,15 @@ import com.veaer.gank.R;
 import com.veaer.gank.data.VDay;
 import com.veaer.gank.model.VDate;
 import com.veaer.gank.model.VFeed;
-import com.veaer.gank.util.StringStyleUtil;
+import com.veaer.gank.util.ShareUtil;
+import com.veaer.gank.util.StringUtil;
 import com.veaer.gank.widget.BaseActivity;
 import com.veaer.gank.widget.BaseViewHolder;
 
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -54,6 +59,27 @@ public class GankDetailActivity extends BaseActivity {
 
         initToolBar();
         initData();
+    }
+
+    @OnClick(R.id.head_image) public void toPicActivity(View view) {
+        Intent picIntent = new Intent(this, PictureActivity.class);
+        picIntent.putExtra("image_url", headUrl);
+        picIntent.putExtra("image_title", vDate.TIME);
+        startActivity(picIntent);
+    }
+
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_share, menu);
+        return true;
+    }
+
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if(R.id.menu_share == item.getItemId()) {
+            ShareUtil.share(this, getString(R.string.share_url) + StringUtil.generateGankLink(vDate.TIME) + getString(R.string.app_download));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void initToolBar() {
@@ -144,7 +170,7 @@ public class GankDetailActivity extends BaseActivity {
 
         public void bindViews(String title, List<VFeed> feeds) {
             titleTv.setText(title);
-            contentTv.setText(StringStyleUtil.generate(feeds, mContext.getResources().getColor(R.color.md_blue_600)));
+            contentTv.setText(StringUtil.generateFeed(feeds, mContext.getResources().getColor(R.color.theme_primary)));
             contentTv.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }

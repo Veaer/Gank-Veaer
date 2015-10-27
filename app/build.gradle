@@ -130,4 +130,6 @@ dependencies {
     compile rootProject.ext.dependencies["rxandroid"]
     compile rootProject.ext.dependencies["butterknife"]
     compile rootProject.ext.dependencies["umeng-analytics"]
+    compile rootProject.ext.dependencies["picasso"]
+    compile rootProject.ext.dependencies["photoview"]
 }

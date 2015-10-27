@@ -17,7 +17,6 @@ import butterknife.Bind;
  */
 public class AboutActivity extends ToolbarActivity {
 
-//    @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.tv_version) TextView mVersionTextView;
 
     @Override

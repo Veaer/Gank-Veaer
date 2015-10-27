@@ -2,6 +2,7 @@ package com.veaer.gank.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.veaer.gank.model.VDate;
 import com.veaer.gank.widget.BaseActivity;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -86,5 +88,12 @@ public class HomeActivity extends BaseActivity {
                     initView();
                 }, throwable -> loadError(throwable));
         addSubscription(today);
+    }
+
+    @OnClick(R.id.home_pic) public void toPicActivity(View view) {
+        Intent picIntent = new Intent(this, PictureActivity.class);
+        picIntent.putExtra("image_url", vDay.results.picList.get(0).url);
+        picIntent.putExtra("image_title", vDate.TIME);
+        startActivity(picIntent);
     }
 }
