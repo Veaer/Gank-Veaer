@@ -2,6 +2,7 @@
 Android for daimajia's meizi
 
 <img src="/app/src/main/res/mipmap-xhdpi/gank_launcher.png" width="128" height="128" />
+<img src="/app/src/main/res/mipmap-xhdpi/ic_launcher.png" width="128" height="128" />
 
 欣赏妹纸,查看干货Feed的小应用，数据来自[代码家](https://github.com/daimajia)的干货网站：[Gank.io](http://gank.io)
 
