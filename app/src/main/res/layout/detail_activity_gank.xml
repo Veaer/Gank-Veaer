@@ -22,7 +22,9 @@
             <ImageView
                 android:id="@+id/head_image"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"/>
+                android:layout_height="400dp"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
