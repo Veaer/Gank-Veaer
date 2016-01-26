@@ -3,6 +3,7 @@ package com.veaer.gank.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -92,7 +93,6 @@ public class GankDetailActivity extends BaseActivity {
         Glide.with(mActivity)
                 .load(headUrl)
                 .centerCrop()
-                .placeholder(R.mipmap.gank_launcher)
                 .into(headImage);
     }
 
@@ -170,7 +170,7 @@ public class GankDetailActivity extends BaseActivity {
 
         public void bindViews(String title, List<VFeed> feeds) {
             titleTv.setText(title);
-            contentTv.setText(StringUtil.generateFeed(feeds, mContext.getResources().getColor(R.color.theme_primary)));
+            contentTv.setText(StringUtil.generateFeed(feeds, ContextCompat.getColor(mContext, R.color.theme_primary)));
             contentTv.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }

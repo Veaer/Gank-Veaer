@@ -2,6 +2,7 @@ package com.veaer.gank.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,9 +19,7 @@ import com.veaer.gank.R;
 import com.veaer.gank.data.VAll;
 import com.veaer.gank.model.VDate;
 import com.veaer.gank.model.VFeed;
-import com.veaer.gank.util.ToastUtils;
 import com.veaer.gank.widget.BaseViewHolder;
-import com.veaer.gank.widget.HiSwipeRefreshLayout;
 import com.veaer.gank.widget.ToolbarActivity;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class GankListActivity extends ToolbarActivity {
     @Bind(R.id.rv_gank_list)
     RecyclerView gankListRv;
     @Bind(R.id.swipe_refresh_layout)
-    HiSwipeRefreshLayout refreshLayout;
+    SwipeRefreshLayout refreshLayout;
     int nextPage = 1;
     boolean canAdd = true;
     GankListAdapter gankListAdapter = new GankListAdapter();
@@ -69,7 +68,7 @@ public class GankListActivity extends ToolbarActivity {
 
     public void initGankData(int page, boolean is_refresh) {
         if(!canAdd) {
-            ToastUtils.showShort("滑不动了哟");
+            showToast("滑不动了哟");
             setRefreshing(false);
             return;
         }
@@ -86,7 +85,7 @@ public class GankListActivity extends ToolbarActivity {
                     }
                     if (all.size() == 0) {
                         canAdd = false;
-                        ToastUtils.showShort("滑不动了哟");
+                        showToast("滑不动了哟");
                     }
                     if (is_refresh) {
                         feedsList.clear();
@@ -97,7 +96,7 @@ public class GankListActivity extends ToolbarActivity {
                     }
                     gankListAdapter.notifyDataSetChanged();
                     setRefreshing(false);
-                }, throwable -> loadError(throwable));
+                }, this::loadError);
         addSubscription(s);
     }
 
@@ -116,7 +115,6 @@ public class GankListActivity extends ToolbarActivity {
 
     public void setRefreshing(boolean refreshing) {
         if (!refreshing) {
-            // 防止刷新消失太快，让子弹飞一会儿
             refreshLayout.postDelayed(() -> {
                 if(!this.isFinishing()) {
                     refreshLayout.setRefreshing(false);
@@ -200,14 +198,13 @@ public class GankListActivity extends ToolbarActivity {
         public void bindViews(VFeed vFeed) {
             this.vFeed = vFeed;
             vDate = new VDate(vFeed.publishedAt);
-            yearTv.setText(vDate.YEAR + "");
+            yearTv.append(vDate.YEAR + "");
             monthTv.setText(vDate.getMonth());
-            dayTv.setText(vDate.DAY + "");
+            dayTv.append(vDate.DAY + "");
             descTv.setText(vFeed.desc);
             Glide.with(mActivity)
                     .load(vFeed.url)
                     .centerCrop()
-                    .placeholder(R.mipmap.gank_launcher)
                     .into(pictureIV);
         }
     }

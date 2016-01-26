@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:background="@color/md_black_1000">
 
-    <ImageView
+    <com.veaer.gank.widget.ZoomImageView
         android:id="@+id/picture"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"

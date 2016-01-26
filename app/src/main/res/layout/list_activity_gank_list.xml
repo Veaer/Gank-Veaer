@@ -7,7 +7,7 @@
 
     <include layout="@layout/view_toolbar" />
 
-    <com.veaer.gank.widget.HiSwipeRefreshLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,6 +19,6 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/list_view_holder_list_item"/>
 
-    </com.veaer.gank.widget.HiSwipeRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,7 +1,0 @@
-<resources>
-
-    <declare-styleable name="HiSwipeRefreshLayout">
-        <attr name="foreground" format="reference" />
-    </declare-styleable>
-
-</resources>

@@ -1,5 +1,8 @@
 package com.veaer.gank.view;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +21,7 @@ import butterknife.Bind;
 public class AboutActivity extends ToolbarActivity {
 
     @Bind(R.id.tv_version) TextView mVersionTextView;
+    @Bind(R.id.donate_tv) TextView donateTv;
 
     @Override
     public int getContentViewID() {
@@ -28,7 +32,12 @@ public class AboutActivity extends ToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mVersionTextView.setText("v" + BuildConfig.VERSION_NAME);
+        mVersionTextView.append(BuildConfig.VERSION_NAME);
+        donateTv.setOnClickListener(v -> {
+            ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            cmb.setPrimaryClip(ClipData.newPlainText(null, getText(R.string.email)));
+            showToast(getString(R.string.copy_finish));
+        });
 
     }
 
@@ -53,6 +62,6 @@ public class AboutActivity extends ToolbarActivity {
 
     @Override
     public String getToolBarTitle() {
-        return "关于开发者";
+        return getString(R.string.action_about);
     }
 }

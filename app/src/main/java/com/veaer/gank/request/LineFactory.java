@@ -23,12 +23,10 @@ package com.veaer.gank.request;
  * Created by Veaer on 15/9/8.
  */
 public class LineFactory {
-
-    protected static final Object monitor = new Object();
     static Line sSingleton = null;
 
     public static Line getSingleton() {
-        synchronized (monitor) {
+        synchronized (LineFactory.class) {
             if (sSingleton == null) {
                 sSingleton = new LineRetrofit().getService();
             }

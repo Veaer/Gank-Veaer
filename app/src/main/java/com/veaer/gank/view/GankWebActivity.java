@@ -14,7 +14,6 @@ import android.webkit.WebViewClient;
 
 import com.veaer.gank.R;
 import com.veaer.gank.util.ShareUtil;
-import com.veaer.gank.util.ToastUtils;
 import com.veaer.gank.widget.ToolbarActivity;
 
 import butterknife.Bind;
@@ -94,7 +93,7 @@ public class GankWebActivity extends ToolbarActivity {
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 } else {
-                    ToastUtils.showLong(R.string.open_fail);
+                    showToast(getString(R.string.open_fail));
                 }
                 return true;
         }

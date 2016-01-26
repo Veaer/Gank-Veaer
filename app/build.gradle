@@ -2,9 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
 def keyStore = file('../gank.keystore')
-def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
-}
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
@@ -21,16 +18,8 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/dependencies.txt'
-        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/rxjava.properties'
     }
 
     dexOptions {
@@ -50,7 +39,7 @@ android {
         }
 
         release {
-            storeFile file('../gank.keystore')
+            storeFile keyStore
             storePassword properties.getProperty('STOREPASS')
             keyAlias properties.getProperty('KEYALIAS')
             keyPassword properties.getProperty('KEYPASS')
@@ -59,22 +48,14 @@ android {
 
     buildTypes {
         debug {
-            manifestPlaceholders = [
-                    UMENG_APPKEY: "55e44716e0f55aa3a8004c5d",
-                    UMENG_MESSAGE_SECRET: "67100d31ce327abf16a8fb3258d5073f",
-                    VIDEOJJ_KEY:properties.getProperty('VIDEOJJKEY')
-            ]
+            manifestPlaceholders = [UMENG_APPKEY: properties.getProperty('UMENGAPPKEY')]
 
         }
 
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
 
-            manifestPlaceholders = [
-                    UMENG_APPKEY: "55e44716e0f55aa3a8004c5d",
-                    UMENG_MESSAGE_SECRET: "67100d31ce327abf16a8fb3258d5073f",
-                    VIDEOJJ_KEY:properties.getProperty('VIDEOJJKEY')
-            ]
+            manifestPlaceholders = [UMENG_APPKEY: properties.getProperty('UMENGAPPKEY')]
 
             minifyEnabled false
             zipAlignEnabled true
@@ -95,18 +76,10 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
-
     productFlavors {
-        "Veaer"{
-            ndk{
-                abiFilter "armeabi"
-            }
-        }
+        "Veaer"{}
+        "smartisan"{}
+        "wandoujia"{}
     }
 
     productFlavors.all {
@@ -130,6 +103,4 @@ dependencies {
     compile rootProject.ext.dependencies["rxandroid"]
     compile rootProject.ext.dependencies["butterknife"]
     compile rootProject.ext.dependencies["umeng-analytics"]
-    compile rootProject.ext.dependencies["picasso"]
-    compile rootProject.ext.dependencies["photoview"]
 }

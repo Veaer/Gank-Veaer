@@ -52,9 +52,9 @@ public class HomeActivity extends BaseActivity {
 
     public void initView() {
         Glide.with(mActivity).load(vDay.results.picList.get(0).url).into(picIv);
-        picViaTv.setText("via." + vDay.results.picList.get(0).who);
+        picViaTv.append("via." + vDay.results.picList.get(0).who);
         videoTv.setText(vDay.results.videoList.get(0).desc);
-        videoViaTv.setText(vDate.TIME  + "  via." + vDay.results.videoList.get(0).who);
+        videoViaTv.append(vDate.TIME  + "  via." + vDay.results.videoList.get(0).who);
         videoRl.setOnClickListener(v -> listener("video"));
         listTv.setOnClickListener(v -> listener("list"));
     }
@@ -75,7 +75,7 @@ public class HomeActivity extends BaseActivity {
     public void loadData() {
         Subscription splash = mLine.getSplashData()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(vAll -> getTodayData(vAll), throwable -> loadError(throwable));
+                .subscribe(this::getTodayData, this::loadError);
         addSubscription(splash);
     }
 
@@ -86,7 +86,7 @@ public class HomeActivity extends BaseActivity {
                 .subscribe(vDay -> {
                     this.vDay = vDay;
                     initView();
-                }, throwable -> loadError(throwable));
+                }, this::loadError);
         addSubscription(today);
     }
 

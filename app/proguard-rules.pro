@@ -15,12 +15,24 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-#友盟
+-dontwarn rx.**
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+-keepclasseswithmembers class * {
+    @retrofit.http.* <methods>;
+}
+
+# umeng
 -keepclassmembers class * {
    public <init>(org.json.JSONObject);
 }
 
--dontwarn com.squareup.okhttp.**
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# ButterKnife 7
 
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
@@ -34,127 +46,60 @@
     @butterknife.* <methods>;
 }
 
+-keep public class android.support.v7.widget.** { *; }
+-keep public class android.support.v7.internal.widget.** { *; }
+-keep public class android.support.v7.internal.view.menu.** { *; }
 
-
--keep public class com.veaer.gank.R$*{
-public static final int *;
-}
-
--keep class com.veaer.gank.BuildConfig { *; }
--keep public class * extends android.os.Binder
-
-
-
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
-    **[] $VALUES;
-    public *;
-}
-
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
-    **[] $VALUES;
-    public *;
+-keep public class * extends android.support.v4.view.ActionProvider {
+    public <init>(android.content.Context);
 }
 
 
+-dontwarn android.support.design.**
+-keep class android.support.design.** { *; }
+-keep interface android.support.design.** { *; }
+-keep public class android.support.design.R$* { *; }
 
-# Keep the support library
--keep class android.support.** { *; }
--keep interface android.support.** { *; }
-
-# For using GSON @Expose annotation
--keepattributes *Annotation*
-
--keepattributes EnclosingMethod
-
-# Gson specific classes
--keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.stream.** { *; }
-
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
-
--keep class * implements android.os.Parcelable {
-  public static final android.os.Parcelable$Creator *;
-}
-
--keepattributes Signature
--keep class **.R$* {*;}
--ignorewarnings
-
--verbose
--keepclasseswithmembernames class * {
-    native <methods>;
-}
-
--keep class me.drakeet.meizhi.** { *;}
-
--keepclasseswithmembernames class * {
-    native <methods>;
-}
-
--keep class android.support.v8.renderscript.** { *; }
-
-
-# Remove logging calls
--assumenosideeffects class android.util.Log {
-    public static boolean isLoggable(java.lang.String, int);
-    public static int v(...);
-    public static int i(...);
-    public static int w(...);
-    public static int d(...);
-    public static int e(...);
-}
-
-# For Guava:
--dontwarn javax.annotation.**
--dontwarn javax.inject.**
--dontwarn sun.misc.Unsafe
-
-# For RxJava:
--dontwarn org.mockito.**
--dontwarn org.junit.**
--dontwarn org.robolectric.**
-
-
+# OkHttp
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class com.squareup.okhttp.** { *; }
 -keep interface com.squareup.okhttp.** { *; }
 -dontwarn com.squareup.okhttp.**
 
--dontwarn rx.**
--dontwarn retrofit.**
--keep class retrofit.** { *; }
--keepclasseswithmembers class * {
-    @retrofit.http.* <methods>;
-}
+## Retrolambda specific rules ##
 
--keep class sun.misc.Unsafe { *; }
-
+# as per official recommendation: https://github.com/evant/gradle-retrolambda#proguard
 -dontwarn java.lang.invoke.*
 
-# 使用注解
--keepattributes *Annotation*,Signature
 
-# 保持混淆时类的实名及行号(——————— 调试时打开 ———————)
--keepattributes SourceFile,LineNumberTable
+# Okio
+-keep class sun.misc.Unsafe { *; }
+-dontwarn java.nio.file.*
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn okio.**
 
-# 枚举需要keep see http://proguard.sourceforge.net/manual/examples.html#enumerations
--keepclassmembers enum * {
+# RxJava 0.21
+
+-keep class rx.schedulers.Schedulers {
+    public static <methods>;
+}
+-keep class rx.schedulers.ImmediateScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.TestScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.Schedulers {
+    public static ** test();
+}
+
+
+# Glide specific rules #
+# https://github.com/bumptech/glide
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
     **[] $VALUES;
     public *;
-}
-
-# umeng
--keepclassmembers class * {
-   public <init>(org.json.JSONObject);
-}
-
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
 }

@@ -3,14 +3,13 @@ package com.veaer.gank.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.umeng.analytics.MobclickAgent;
+import com.veaer.gank.R;
 import com.veaer.gank.request.Line;
 import com.veaer.gank.request.LineFactory;
-import com.veaer.gank.util.DataProvider;
-import com.veaer.gank.util.ToastUtils;
 
 import butterknife.ButterKnife;
 import rx.Subscription;
@@ -23,23 +22,8 @@ public class BaseActivity extends AppCompatActivity {
     public static String TAG;
     public Activity mActivity;
     public Context mContext;
-    protected String[] headWhiteList = {};
     protected final static Line mLine = LineFactory.getSingleton();
     protected CompositeSubscription mCompositeSubscription;
-    protected final static DataProvider mData = DataProvider.getInstance();
-
-    public < T extends View> T $(int id) {
-        return (T)super.findViewById(id);
-    }
-
-    public void hideView(int id) {
-        findViewById(id).setVisibility(View.GONE);
-    }
-
-    public void showView(int id) {
-        findViewById(id).setVisibility(View.VISIBLE);
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +80,17 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void loadError(Throwable throwable) {
-        ToastUtils.showShort("貌似网络出了一点问题，快喝口水冷静一下\uD83D\uDE02");
+        showToast(getString(R.string.error));
     }
+
+
+    public void showToast(int id) {
+        showToast(getString(id));
+    }
+
+    public void showToast(String msg) {
+        if(null == msg) { return; }
+        Snackbar.make(getWindow().getDecorView(), msg, Snackbar.LENGTH_SHORT).show();
+    }
+
 }
